@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { colors, textStyles } from "../utils/theme";
+import { Picker } from "@react-native-picker/picker";
+import Step1Acknowledge from "../components/Step1Acknowledge";
 
 const styles = StyleSheet.create({
   container: {
@@ -11,18 +13,23 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontSize: 28,
+    fontSize: 22,
     fontWeight: "bold",
     color: colors.primary,
     marginBottom: 10,
+    maxWidth: 200,
+    textAlign: "center",
+    position: "absolute",
+    bottom: "8%",
     ...textStyles.header,
   },
   closeButton: {
+    position: "absolute",
+    top: " 13%",
+    right: " 23%",
     backgroundColor: colors.slateBlue,
     padding: 11,
     borderRadius: 8,
-    maxWidth: 400,
-    marginBottom: 15,
     boxShadow: "0px 2px 3.84px rgba(0, 0, 0, 0.25)",
     elevation: 5,
   },
@@ -32,12 +39,30 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     ...textStyles.header,
   },
+  buttonContainer: {
+    position: "absolute",
+    bottom: "15%",
+    right: 0,
+    left: 0,
+    flexDirection: "row",
+    gap: 10,
+    justifyContent: "center",
+  },
+  backButton: {
+    backgroundColor: colors.deeperTeal,
+    padding: 11,
+    borderRadius: 8,
+    minWidth: 80,
+    alignItems: "center",
+    boxShadow: "0px 2px 3.84px rgba(0, 0, 0, 0.25)",
+    elevation: 5,
+  },
   nextButton: {
     backgroundColor: colors.slateBlue,
     padding: 11,
     borderRadius: 8,
-    maxWidth: 400,
-    marginBottom: 15,
+    minWidth: 80,
+    alignItems: "center",
     boxShadow: "0px 2px 3.84px rgba(0, 0, 0, 0.25)",
     elevation: 5,
   },
@@ -62,17 +87,37 @@ const PanicAttackWalkThroughScreen = ({ navigation }: any) => {
       >
         <Text style={styles.closeButtonText}>Close</Text>
       </TouchableOpacity>
+
+      {/* Button Container */}
+      <View style={styles.buttonContainer}>
+        {currentStep > 1 && (
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => setCurrentStep(currentStep - 1)}
+          >
+            <Text style={styles.nextButtonText}>Back</Text>
+          </TouchableOpacity>
+        )}
+        <TouchableOpacity
+          style={styles.nextButton}
+          onPress={() => {
+            if (currentStep < 4) {
+              setCurrentStep(currentStep + 1);
+            }
+          }}
+        >
+          <Text style={styles.nextButtonText}>Next</Text>
+        </TouchableOpacity>
+      </View>
       <Text style={styles.title}>Step {currentStep} of 4</Text>
-      <TouchableOpacity
-        style={styles.nextButton}
-        onPress={() => {
-          if (currentStep < 4) {
-            setCurrentStep(currentStep + 1);
-          }
-        }}
-      >
-        <Text style={styles.nextButtonText}>Next</Text>
-      </TouchableOpacity>
+      {currentStep === 1 && (
+        <Step1Acknowledge
+          selectedEmotion={selectedEmotion}
+          setSelectedEmotion={setSelectedEmotion}
+          initialRating={initialRating}
+          setInitialRating={setInitialRating}
+        />
+      )}
     </View>
   );
 };

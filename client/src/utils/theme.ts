@@ -27,10 +27,13 @@ export const colors = {
   softTealGreen: "#9ec0bb",
   mediumTeal: "#84afad",
   deeperTeal: "#6b9d9b",
+  mutedBlue: "#33638C",
+  mutedGrayBlue: "#657187",
 
   // Semantic colors (for specific uses)
   background: "#F5F5F0",
   primary: "#5F8A8B",
+  secondary: "#2D567A",
   text: "#3E4A54",
   border: "#C9CABB",
   white: "#FFFFFF",
@@ -46,5 +49,6 @@ export const textStyles = {
   },
   body: {
     fontFamily: "PoiretOne",
+    textTransform: "uppercase" as const,
   },
 };
