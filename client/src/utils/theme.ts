@@ -4,8 +4,8 @@ export const colors = {
   cream: "#F5F5F0",
   lightBeige: "#E8E6DC",
   lightGrayGreen: "#C9CABB",
-  softTeal: "#B3C5C5",
-  mutedTeal: "#5F8A8B",
+  softTeal: "#9bcfcf",
+  mutedTeal: "#5dbaba",
 
   // Middle row
   lightGray: "#E5E5E5",

@@ -68,8 +68,9 @@ const Step1Acknowledge = ({
           maximumValue={10}
           step={1}
           style={styles.slider}
-          minimumTrackTintColor={colors.slateBlue}
-          maximumTrackTintColor={colors.lightGray}
+          minimumTrackTintColor={colors.secondary}
+          maximumTrackTintColor={colors.primary}
+          thumbTintColor={colors.mutedTeal}
         />
         <Text style={styles.emotions}>Unbearable</Text>
       </View>
