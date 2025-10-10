@@ -10,7 +10,8 @@ export const colors = {
   // Middle row
   lightGray: "#E5E5E5",
   warmBeige: "#D4C9B0",
-  softBlue: "#8AAAB4",
+  softBlue: "#9cc2d1",
+  mediumBlue: "#78a3b5",
   slateBlue: "#5F7E8C",
   deepTeal: "#3D5A5C",
 
