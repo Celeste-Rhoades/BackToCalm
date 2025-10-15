@@ -10,6 +10,7 @@ import { colors, textStyles } from "../utils/theme";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { DrawerParamList } from "../types/navigation";
 import { useResponsive } from "../utils/useResponsive";
+import { PanicAttackRound } from "../types/panicAttackRound";
 
 import Step1Acknowledge from "../components/Step1Acknowledge";
 import Step2Ownership from "../components/Step2Ownership";
@@ -29,18 +30,28 @@ const PanicAttackWalkThroughScreen = ({
   navigation,
 }: PanicAttackWalkthroughScreenProps) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [initialRating, setInitialRating] = useState(5);
-  const [selectedEmotion, setSelectedEmotion] = useState("");
-  const [ownershipPhrases, setOwnershipPhrases] = useState<string[]>([]);
-  const [customOwnership, setCustomOwnership] = useState("");
-  const [thoughtPatterns, setThoughtPatterns] = useState<string[]>([]);
-  const [thoughtTexts, setThoughtTexts] = useState<string[]>([]);
-  const [customThought, setCustomThought] = useState("");
-  const [selectedMantras, setSelectedMantras] = useState<string[]>([]);
-  const [customReplacement, setCustomReplacement] = useState("");
-  const [replacementTexts, setReplacementTexts] = useState<string[]>([]);
-  const [finalRating, setFinalRating] = useState(5);
 
+  // Array to store all completed rounds
+  const [rounds, setRounds] = useState<PanicAttackRound[]>([]);
+
+  // Current round being filled out
+  const [currentRound, setCurrentRound] = useState<PanicAttackRound>({
+    roundNumber: 1,
+    selectedEmotion: "",
+    initialRating: 5,
+    ownershipPhrases: [],
+    thoughtPatterns: [],
+    thoughtTexts: [],
+    selectedMantras: [],
+    replacementTexts: [],
+    finalRating: 5,
+    timestamp: new Date(),
+  });
+
+  // Temporary inputs (not part of saved round data)
+  const [customOwnership, setCustomOwnership] = useState("");
+  const [customThought, setCustomThought] = useState("");
+  const [customReplacement, setCustomReplacement] = useState("");
   const { isMobile, isTablet } = useResponsive();
 
   const styles = StyleSheet.create({
@@ -135,17 +146,23 @@ const PanicAttackWalkThroughScreen = ({
       >
         {currentStep === 1 && (
           <Step1Acknowledge
-            selectedEmotion={selectedEmotion}
-            setSelectedEmotion={setSelectedEmotion}
-            initialRating={initialRating}
-            setInitialRating={setInitialRating}
+            selectedEmotion={currentRound.selectedEmotion}
+            setSelectedEmotion={emotion =>
+              setCurrentRound({ ...currentRound, selectedEmotion: emotion })
+            }
+            initialRating={currentRound.initialRating}
+            setInitialRating={rating =>
+              setCurrentRound({ ...currentRound, initialRating: rating })
+            }
           />
         )}
 
         {currentStep === 2 && (
           <Step2Ownership
-            ownershipPhrases={ownershipPhrases}
-            setOwnershipPhrases={setOwnershipPhrases}
+            ownershipPhrases={currentRound.ownershipPhrases}
+            setOwnershipPhrases={phrases =>
+              setCurrentRound({ ...currentRound, ownershipPhrases: phrases })
+            }
             customOwnership={customOwnership}
             setCustomOwnership={setCustomOwnership}
           />
@@ -153,22 +170,31 @@ const PanicAttackWalkThroughScreen = ({
 
         {currentStep === 3 && (
           <Step3Identify
-            thoughtPatterns={thoughtPatterns}
-            setThoughtPatterns={setThoughtPatterns}
-            thoughtTexts={thoughtTexts}
-            setThoughtTexts={setThoughtTexts}
+            thoughtPatterns={currentRound.thoughtPatterns}
+            setThoughtPatterns={patterns =>
+              setCurrentRound({ ...currentRound, thoughtPatterns: patterns })
+            }
+            thoughtTexts={currentRound.thoughtTexts}
+            setThoughtTexts={texts =>
+              setCurrentRound({ ...currentRound, thoughtTexts: texts })
+            }
             customThought={customThought}
             setCustomThought={setCustomThought}
           />
         )}
+
         {currentStep === 4 && (
           <Step4Replace
-            selectedMantras={selectedMantras}
-            setSelectedMantras={setSelectedMantras}
+            selectedMantras={currentRound.selectedMantras}
+            setSelectedMantras={mantras =>
+              setCurrentRound({ ...currentRound, selectedMantras: mantras })
+            }
             customReplacement={customReplacement}
             setCustomReplacement={setCustomReplacement}
-            replacementTexts={replacementTexts}
-            setReplacementTexts={setReplacementTexts}
+            replacementTexts={currentRound.replacementTexts}
+            setReplacementTexts={texts =>
+              setCurrentRound({ ...currentRound, replacementTexts: texts })
+            }
           />
         )}
       </ScrollView>
