@@ -14,6 +14,7 @@ import { useResponsive } from "../utils/useResponsive";
 import Step1Acknowledge from "../components/Step1Acknowledge";
 import Step2Ownership from "../components/Step2Ownership";
 import Step3Identify from "../components/Step3Identify";
+import Step4Replace from "../components/Step4Replace";
 
 type PanicAttackWalkthroughScreenNavigationProp = DrawerNavigationProp<
   DrawerParamList,
@@ -35,6 +36,9 @@ const PanicAttackWalkThroughScreen = ({
   const [thoughtPatterns, setThoughtPatterns] = useState<string[]>([]);
   const [thoughtTexts, setThoughtTexts] = useState<string[]>([]);
   const [customThought, setCustomThought] = useState("");
+  const [selectedMantras, setSelectedMantras] = useState<string[]>([]);
+  const [customReplacement, setCustomReplacement] = useState("");
+  const [replacementTexts, setReplacementTexts] = useState<string[]>([]);
 
   const { isMobile, isTablet } = useResponsive();
 
@@ -154,6 +158,16 @@ const PanicAttackWalkThroughScreen = ({
             setThoughtTexts={setThoughtTexts}
             customThought={customThought}
             setCustomThought={setCustomThought}
+          />
+        )}
+        {currentStep === 4 && (
+          <Step4Replace
+            selectedMantras={selectedMantras}
+            setSelectedMantras={setSelectedMantras}
+            customReplacement={customReplacement}
+            setCustomReplacement={setCustomReplacement}
+            replacementTexts={replacementTexts}
+            setReplacementTexts={setReplacementTexts}
           />
         )}
       </ScrollView>
