@@ -39,6 +39,7 @@ const PanicAttackWalkThroughScreen = ({
   const [selectedMantras, setSelectedMantras] = useState<string[]>([]);
   const [customReplacement, setCustomReplacement] = useState("");
   const [replacementTexts, setReplacementTexts] = useState<string[]>([]);
+  const [finalRating, setFinalRating] = useState(5);
 
   const { isMobile, isTablet } = useResponsive();
 
@@ -173,7 +174,9 @@ const PanicAttackWalkThroughScreen = ({
       </ScrollView>
 
       <View style={styles.footer}>
-        <Text style={styles.stepIndicator}>Step {currentStep} of 4</Text>
+        <Text style={styles.stepIndicator}>
+          {currentStep === 5 ? "Session Summary" : `Step ${currentStep} of 4`}
+        </Text>
         <View style={styles.buttonContainer}>
           {currentStep > 1 && (
             <TouchableOpacity
@@ -183,16 +186,18 @@ const PanicAttackWalkThroughScreen = ({
               <Text style={styles.nextButtonText}>Back</Text>
             </TouchableOpacity>
           )}
-          <TouchableOpacity
-            style={styles.nextButton}
-            onPress={() => {
-              if (currentStep < 4) {
-                setCurrentStep(currentStep + 1);
-              }
-            }}
-          >
-            <Text style={styles.nextButtonText}>Next</Text>
-          </TouchableOpacity>
+          {currentStep < 5 && (
+            <TouchableOpacity
+              style={styles.nextButton}
+              onPress={() => {
+                if (currentStep < 5) {
+                  setCurrentStep(currentStep + 1);
+                }
+              }}
+            >
+              <Text style={styles.nextButtonText}>Next</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </View>

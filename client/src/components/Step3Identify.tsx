@@ -246,7 +246,7 @@ const Step3Identify = ({
         value={customThought}
         onChangeText={setCustomThought}
         placeholder="Describe your thought..."
-        placeholderTextColor={colors.mediumGray}
+        placeholderTextColor={colors.primary}
         multiline
         onSubmitEditing={saveCustomThought}
       />

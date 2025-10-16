@@ -36,7 +36,7 @@ export const colors = {
   primary: "#5F8A8B",
   secondary: "#2D567A",
   text: "#3E4A54",
-  border: "#C9CABB",
+  border: "#78a3b5",
   white: "#FFFFFF",
 };
 export const fonts = {

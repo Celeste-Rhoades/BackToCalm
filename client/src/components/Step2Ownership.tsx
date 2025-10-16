@@ -130,9 +130,9 @@ const Step2Ownership = ({
       width: "100%",
       minHeight: 60,
       maxWidth: 700,
+      textAlign: "center",
       fontSize: isMobile ? 16 : 14,
       color: colors.secondary,
-      textAlignVertical: "top",
       ...textStyles.body,
     },
     saveButton: {
@@ -189,7 +189,7 @@ const Step2Ownership = ({
         value={customOwnership}
         onChangeText={setCustomOwnership}
         placeholder="Add your own ownership statement..."
-        placeholderTextColor={colors.mediumGray}
+        placeholderTextColor={colors.primary}
         multiline
         onSubmitEditing={saveCustomStatement}
       />

@@ -130,7 +130,7 @@ const Step4Replace = ({
     phrasesContainer: {
       width: "100%",
       maxWidth: 700,
-      marginBottom: "2%",
+      marginBottom: "3.5%",
       alignItems: "center",
       justifyContent: "center",
     },
@@ -183,7 +183,7 @@ const Step4Replace = ({
     savedThoughtsContainer: {
       width: "100%",
       maxWidth: 700,
-      marginTop: "3%",
+      marginTop: "2%",
     },
     savedThought: {
       backgroundColor: colors.lightGray,
@@ -201,7 +201,7 @@ const Step4Replace = ({
     examplesContainer: {
       width: "100%",
       maxWidth: 700,
-      marginBottom: "3%",
+      marginBottom: "1%",
       alignItems: "center",
     },
   });
