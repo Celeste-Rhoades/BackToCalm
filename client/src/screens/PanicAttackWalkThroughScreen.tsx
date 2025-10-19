@@ -13,6 +13,7 @@ import { useResponsive } from "../utils/useResponsive";
 
 import Step1Acknowledge from "../components/Step1Acknowledge";
 import Step2Ownership from "../components/Step2Ownership";
+import Step3Identify from "../components/Step3Identify";
 
 type PanicAttackWalkthroughScreenNavigationProp = DrawerNavigationProp<
   DrawerParamList,
@@ -141,6 +142,17 @@ const PanicAttackWalkThroughScreen = ({
             setOwnershipPhrases={setOwnershipPhrases}
             customOwnership={customOwnership}
             setCustomOwnership={setCustomOwnership}
+          />
+        )}
+
+        {currentStep === 3 && (
+          <Step3Identify
+            thoughtPatterns={thoughtPatterns}
+            setThoughtPatterns={setThoughtPatterns}
+            thoughtTexts={thoughtTexts}
+            setThoughtTexts={setThoughtTexts}
+            customThought={customThought}
+            setCustomThought={setCustomThought}
           />
         )}
       </ScrollView>
