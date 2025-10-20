@@ -107,6 +107,38 @@ const SessionSummary = ({
       fontStyle: "italic",
       ...textStyles.body,
     },
+    buttonContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      width: "100%",
+      maxWidth: 700,
+      marginTop: "5%",
+      gap: 12,
+    },
+    startOverButton: {
+      backgroundColor: colors.deeperTeal,
+      padding: isMobile ? 12 : 14,
+      borderRadius: 8,
+      flex: 1,
+      alignItems: "center",
+      boxShadow: "0px 2px 3.84px rgba(0, 0, 0, 0.25)",
+      elevation: 5,
+    },
+    completeButton: {
+      backgroundColor: colors.slateBlue,
+      padding: isMobile ? 12 : 14,
+      borderRadius: 8,
+      flex: 1,
+      alignItems: "center",
+      boxShadow: "0px 2px 3.84px rgba(0, 0, 0, 0.25)",
+      elevation: 5,
+    },
+    buttonText: {
+      color: colors.white,
+      fontSize: isMobile ? 14 : 16,
+      fontWeight: "600",
+      ...textStyles.header,
+    },
   });
 
   return (
@@ -235,6 +267,16 @@ const SessionSummary = ({
             </Text>
           ))
         )}
+      </View>
+      {/* Action Buttons */}
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.startOverButton} onPress={onStartOver}>
+          <Text style={styles.buttonText}>Start Over</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.completeButton} onPress={onComplete}>
+          <Text style={styles.buttonText}>Complete & Save Session</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

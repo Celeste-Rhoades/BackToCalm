@@ -16,6 +16,7 @@ import Step1Acknowledge from "../components/Step1Acknowledge";
 import Step2Ownership from "../components/Step2Ownership";
 import Step3Identify from "../components/Step3Identify";
 import Step4Replace from "../components/Step4Replace";
+import SessionSummary from "../components/SessionSummary";
 
 type PanicAttackWalkthroughScreenNavigationProp = DrawerNavigationProp<
   DrawerParamList,
@@ -56,6 +57,50 @@ const PanicAttackWalkThroughScreen = ({
   const [customReplacement, setCustomReplacement] = useState("");
 
   const { isMobile, isTablet } = useResponsive();
+
+  // Save current round and start a new round
+  const handleStartOver = () => {
+    // Add current round to rounds array
+    setRounds([...rounds, { ...currentRound, roundNumber: rounds.length + 1 }]);
+
+    // Reset current round to fresh state
+    setCurrentRound({
+      roundNumber: rounds.length + 2,
+      selectedEmotion: "",
+      initialRating: 5,
+      ownershipPhrases: [],
+      customOwnershipTexts: [],
+      thoughtPatterns: [],
+      thoughtTexts: [],
+      selectedMantras: [],
+      replacementTexts: [],
+      finalRating: 5,
+      timestamp: new Date(),
+    });
+
+    // Clear temporary inputs
+    setCustomOwnership("");
+    setCustomThought("");
+    setCustomReplacement("");
+
+    // Go back to step 1
+    setCurrentStep(1);
+  };
+
+  // Save session to Firebase (placeholder for now)
+  const handleComplete = () => {
+    // Add current round to rounds array
+    const allRounds = [
+      ...rounds,
+      { ...currentRound, roundNumber: rounds.length + 1 },
+    ];
+
+    // TODO: Save allRounds to Firebase
+    console.log("Session complete! Rounds:", allRounds);
+
+    // For now, just go back to home
+    navigation.goBack();
+  };
 
   const styles = StyleSheet.create({
     container: {
@@ -211,6 +256,16 @@ const PanicAttackWalkThroughScreen = ({
             setReplacementTexts={texts =>
               setCurrentRound({ ...currentRound, replacementTexts: texts })
             }
+          />
+        )}
+        {/* Step 5: Session Summary */}
+        {currentStep === 5 && (
+          <SessionSummary
+            rounds={rounds}
+            currentRound={currentRound}
+            setCurrentRound={setCurrentRound}
+            onStartOver={handleStartOver}
+            onComplete={handleComplete}
           />
         )}
       </ScrollView>
