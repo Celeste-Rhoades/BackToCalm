@@ -245,9 +245,10 @@ const Step4Replace = ({
 
         {/* Explanation paragraph */}
         <Text style={styles.paragraph}>
-          Choose mantras that feel believable to you. Repeating these thoughts
-          helps create new neural pathways, replacing old negative patterns with
-          more helpful ones.
+          If these statements are not believable, acknowledge that with a
+          statement such as, “I don’t see that or believe that, but I’m going to
+          keep saying it to calm myself and create a new pathway in my brain,”
+          or “It may not be true right now, but it could happen in the future.”
         </Text>
       </View>
 
