@@ -77,7 +77,7 @@ const Step2Ownership = ({
       fontWeight: "bold",
       color: colors.secondary,
       textAlign: "center",
-      marginBottom: "4%",
+      marginBottom: "2%",
       ...textStyles.header,
     },
     phrasesContainer: {

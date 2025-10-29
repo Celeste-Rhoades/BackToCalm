@@ -209,28 +209,29 @@ const SessionSummary = ({
       {/* Step 4: Replace my negative thoughts*/}
       <View style={styles.stepSection}>
         <Text style={styles.stepDataLabel}>
-          Step 3: Identify Thought Patterns
+          Step 4: Replace My Negative Thoughts
         </Text>
 
-        {/* Thought pattern categories from checkboxes */}
-        <Text style={styles.stepDataText}>Thought Pattern Categories:</Text>
-        {currentRound.thoughtPatterns.length === 0 ? (
+        {/* Selected mantras from checkboxes */}
+        <Text style={styles.stepDataText}>Selected Mantras:</Text>
+        {currentRound.selectedMantras.length === 0 ? (
           <Text style={styles.emptyText}>None selected</Text>
         ) : (
-          currentRound.thoughtPatterns.map((pattern, index) => (
+          currentRound.selectedMantras.map((mantra, index) => (
             <Text key={index} style={styles.listItem}>
-              • {pattern}
+              • {mantra}
             </Text>
           ))
         )}
-        {/* Custom thoughts from text input */}
-        <Text style={styles.stepDataText}>Custom Thoughts:</Text>
-        {currentRound.thoughtTexts.length === 0 ? (
+
+        {/* Custom replacement thoughts from text input */}
+        <Text style={styles.stepDataText}>Custom Replacement Thoughts:</Text>
+        {currentRound.replacementTexts.length === 0 ? (
           <Text style={styles.emptyText}>None added</Text>
         ) : (
-          currentRound.thoughtTexts.map((thought, index) => (
+          currentRound.replacementTexts.map((replacement, index) => (
             <Text key={index} style={styles.listItem}>
-              • {thought}
+              • {replacement}
             </Text>
           ))
         )}
