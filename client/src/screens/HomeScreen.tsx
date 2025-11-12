@@ -33,11 +33,7 @@ const styles = StyleSheet.create({
     maxWidth: 400,
     alignItems: "center",
     marginBottom: 20,
-    // Add shadow properties
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    boxShadow: "0px 2px 3.84px rgba(0, 0, 0, 0.25)",
     elevation: 5, // Android
   },
   panicButtonText: {
@@ -54,11 +50,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "absolute",
     bottom: 20,
-    // Shadow properties
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    boxShadow: "0px 2px 3.84px rgba(0, 0, 0, 0.25)",
     elevation: 5,
   },
   logoutButtonText: {
@@ -75,11 +67,7 @@ const styles = StyleSheet.create({
     maxWidth: 400,
     alignItems: "center",
     marginBottom: 15,
-    // Add shadow properties
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    boxShadow: "0px 2px 3.84px rgba(0, 0, 0, 0.25)",
     elevation: 5,
   },
   logButtonText: {
@@ -95,11 +83,7 @@ const styles = StyleSheet.create({
     maxWidth: 400,
     alignItems: "center",
     marginBottom: 20,
-    // Add shadow properties
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    boxShadow: "0px 2px 3.84px rgba(0, 0, 0, 0.25)",
     elevation: 5, // Android
   },
   breathingButtonText: {
@@ -109,7 +93,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }: any) => {
   const user = useAuthStore(state => state.user);
   const logout = useAuthStore(state => state.logout);
 
@@ -135,7 +119,7 @@ const HomeScreen = () => {
       {/* Main Panic Button */}
       <TouchableOpacity
         style={styles.panicButton}
-        onPress={() => Alert.alert("Feature Coming Soon")}
+        onPress={() => navigation.navigate("PanicAttackWalkthrough")}
       >
         <Text style={styles.panicButtonText}>I'm Having a Panic Attack</Text>
       </TouchableOpacity>
