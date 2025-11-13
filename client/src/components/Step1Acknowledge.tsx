@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   View,
   Text,
   StyleSheet,
-  Dimensions,
   Alert,
   TextInput,
   TouchableOpacity,
@@ -12,6 +11,7 @@ import {
 import Slider from "@react-native-community/slider";
 import { colors, textStyles } from "../utils/theme";
 import { Picker } from "@react-native-picker/picker";
+import { useResponsive } from "../utils/useResponsive";
 
 type Step1AcknowledgeProps = {
   selectedEmotion: string;
@@ -26,26 +26,10 @@ const Step1Acknowledge = ({
   initialRating,
   setInitialRating,
 }: Step1AcknowledgeProps) => {
-  // Screen dimensions with state for responsive updates
-  const [screenWidth, setScreenWidth] = useState(
-    Dimensions.get("window").width
-  );
+  // Use responsive hook instead of local state
+  const { isMobile, isTablet, isDesktop } = useResponsive();
 
-  // Listen for screen size changes
-  useEffect(() => {
-    const subscription = Dimensions.addEventListener("change", ({ window }) => {
-      setScreenWidth(window.width);
-    });
-
-    return () => subscription?.remove();
-  }, []);
-
-  // Responsive breakpoints
-  const isMobile = screenWidth < 375;
-  const isTablet = screenWidth >= 375 && screenWidth < 768;
-  const isDesktop = screenWidth >= 768;
-
-  // emtions array for dropdown
+  // Emotions array for dropdown
   const emotions = [
     "",
     "Sad",
@@ -106,7 +90,7 @@ const Step1Acknowledge = ({
       marginVertical: isMobile ? "3%" : isTablet ? "3%" : ".25%",
     },
     emotions: {
-      fontSize: isMobile ? 10 : isTablet ? 12 : 16,
+      fontSize: isMobile ? 14 : isTablet ? 12 : 16,
       ...textStyles.header,
       paddingHorizontal: isMobile ? "2%" : "3%",
       color: colors.secondary,

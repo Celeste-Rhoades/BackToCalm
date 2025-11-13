@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   View,
   Text,
   StyleSheet,
-  Dimensions,
   Alert,
   TextInput,
   TouchableOpacity,
-  Platform,
 } from "react-native";
 import { colors, textStyles } from "../utils/theme";
-import { Picker } from "@react-native-picker/picker";
+import { useResponsive } from "../utils/useResponsive";
 
 type Step2OwnershipProps = {
   ownershipPhrases: string[];
@@ -38,19 +36,122 @@ const Step2Ownership = ({
   customOwnership,
   setCustomOwnership,
 }: Step2OwnershipProps) => {
-  // This function handles toggling a phrase on/off
+  const { isMobile } = useResponsive();
+
   const togglePhrase = (phrase: string) => {
-    // Check if this phrase is already in the selected phrases array
     if (ownershipPhrases.includes(phrase)) {
-      // If it IS in the array, remove it (user is unchecking)
-      // filter() creates a new array with only items that DON'T match this phrase
       setOwnershipPhrases(ownershipPhrases.filter(p => p !== phrase));
     } else {
-      // If it's NOT in the array, add it (user is checking)
-      // ...ownershipPhrases spreads the existing array, then we add the new phrase
       setOwnershipPhrases([...ownershipPhrases, phrase]);
     }
   };
+
+  const saveCustomStatement = () => {
+    const trimmedText = customOwnership.trim();
+    if (!trimmedText) {
+      return;
+    }
+
+    if (ownershipPhrases.includes(trimmedText)) {
+      Alert.alert("Already Added", "You've already added this statement.");
+      return;
+    }
+
+    setOwnershipPhrases([...ownershipPhrases, trimmedText]);
+    setCustomOwnership("");
+    Alert.alert("Saved", "Your custom statement has been added.");
+  };
+
+  const styles = StyleSheet.create({
+    container: {
+      alignItems: "center",
+      paddingHorizontal: "5%",
+      paddingVertical: "5%",
+    },
+    title: {
+      fontSize: isMobile ? 16 : 18,
+      fontWeight: "bold",
+      color: colors.secondary,
+      textAlign: "center",
+      marginBottom: "4%",
+      ...textStyles.header,
+    },
+    phrasesContainer: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      width: "100%",
+      justifyContent: "space-between",
+      marginBottom: "4%",
+      maxWidth: 900,
+      alignItems: "center",
+      paddingHorizontal: "2%",
+    },
+    checkboxRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      width: isMobile ? "100%" : "48%",
+      marginBottom: "3%",
+    },
+    checkboxUnchecked: {
+      width: isMobile ? 24 : 20,
+      height: isMobile ? 24 : 20,
+      borderWidth: 2,
+      borderColor: colors.secondary,
+      borderRadius: 4,
+      backgroundColor: "transparent",
+      marginRight: isMobile ? 12 : 8,
+    },
+    checkboxChecked: {
+      width: isMobile ? 24 : 20,
+      height: isMobile ? 24 : 20,
+      borderRadius: 4,
+      backgroundColor: colors.primary,
+      justifyContent: "center",
+      alignItems: "center",
+      marginRight: isMobile ? 12 : 8,
+    },
+    checkmark: {
+      color: colors.white,
+      fontSize: isMobile ? 18 : 16,
+      fontWeight: "bold",
+    },
+    phraseText: {
+      fontSize: isMobile ? 16 : 14,
+      color: colors.secondary,
+      flex: 1,
+      ...textStyles.body,
+    },
+    textInput: {
+      backgroundColor: colors.lightGray,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 8,
+      padding: 12,
+      width: "100%",
+      minHeight: 60,
+      maxWidth: 700,
+      fontSize: isMobile ? 16 : 14,
+      color: colors.secondary,
+      textAlignVertical: "top",
+      ...textStyles.body,
+    },
+    saveButton: {
+      backgroundColor: colors.slateBlue,
+      padding: isMobile ? 12 : 8,
+      borderRadius: 8,
+      minWidth: isMobile ? 80 : 60,
+      alignItems: "center",
+      marginTop: 10,
+      boxShadow: "0px 2px 3.84px rgba(0, 0, 0, 0.25)",
+      elevation: 5,
+    },
+    saveButtonText: {
+      color: colors.white,
+      fontSize: isMobile ? 16 : 14,
+      fontWeight: "600",
+      ...textStyles.header,
+    },
+  });
 
   return (
     <View style={styles.container}>
@@ -59,10 +160,8 @@ const Step2Ownership = ({
         phrases such as
       </Text>
 
-      {/* Container for all checkboxes with flex wrap for 2-column layout */}
       <View style={styles.phrasesContainer}>
         {phrases.map((phrase, index) => {
-          // For EACH phrase, check if it's in the selected array
           const isSelected = ownershipPhrases.includes(phrase);
 
           return (
@@ -71,25 +170,20 @@ const Step2Ownership = ({
               style={styles.checkboxRow}
               onPress={() => togglePhrase(phrase)}
             >
-              {/* Checkbox visual - changes based on isSelected */}
               {isSelected ? (
-                // If THIS phrase is selected, show filled checkbox with checkmark
                 <View style={styles.checkboxChecked}>
                   <Text style={styles.checkmark}>✓</Text>
                 </View>
               ) : (
-                // If THIS phrase is NOT selected, show empty checkbox
                 <View style={styles.checkboxUnchecked}></View>
               )}
 
-              {/* The phrase text next to the checkbox */}
               <Text style={styles.phraseText}>{phrase}</Text>
             </TouchableOpacity>
           );
         })}
       </View>
 
-      {/* Text input for custom ownership statement */}
       <TextInput
         style={styles.textInput}
         value={customOwnership}
@@ -97,82 +191,13 @@ const Step2Ownership = ({
         placeholder="Add your own ownership statement..."
         placeholderTextColor={colors.mediumGray}
         multiline
+        onSubmitEditing={saveCustomStatement}
       />
+      <TouchableOpacity style={styles.saveButton} onPress={saveCustomStatement}>
+        <Text style={styles.saveButtonText}>Save</Text>
+      </TouchableOpacity>
     </View>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    paddingHorizontal: "5%",
-    paddingVertical: "5%",
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: colors.secondary,
-    textAlign: "center",
-    marginBottom: "4%",
-    ...textStyles.header,
-  },
-  phrasesContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    width: "100%",
-    justifyContent: "space-between",
-    marginBottom: "4%",
-    maxWidth: 900,
-    alignItems: "center",
-    paddingHorizontal: "2%",
-  },
-  checkboxRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    width: "48%",
-    marginBottom: "3%",
-  },
-  checkboxUnchecked: {
-    width: 20,
-    height: 20,
-    borderWidth: 2,
-    borderColor: colors.secondary,
-    borderRadius: 4,
-    backgroundColor: "transparent",
-    marginRight: 8,
-  },
-  checkboxChecked: {
-    width: 20,
-    height: 20,
-    borderRadius: 4,
-    backgroundColor: colors.primary,
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 8,
-  },
-  checkmark: {
-    color: colors.white,
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  phraseText: {
-    fontSize: 14,
-    color: colors.secondary,
-    flex: 1,
-    ...textStyles.body,
-  },
-  textInput: {
-    backgroundColor: colors.lightGray,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 8,
-    padding: 12,
-    width: "100%",
-    minHeight: 60,
-    maxWidth: 700,
-    fontSize: 14,
-    color: colors.secondary,
-    textAlignVertical: "top",
-    ...textStyles.body,
-  },
-});
+
 export default Step2Ownership;

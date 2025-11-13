@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
-  Dimensions,
   ScrollView,
 } from "react-native";
 import { colors, textStyles } from "../utils/theme";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { DrawerParamList } from "../types/navigation";
+import { useResponsive } from "../utils/useResponsive";
 
 import Step1Acknowledge from "../components/Step1Acknowledge";
 import Step2Ownership from "../components/Step2Ownership";
@@ -32,31 +32,12 @@ const PanicAttackWalkThroughScreen = ({
   const [ownershipPhrases, setOwnershipPhrases] = useState<string[]>([]);
   const [customOwnership, setCustomOwnership] = useState("");
 
-  // Screen dimensions with state for responsive updates
-  const [screenWidth, setScreenWidth] = useState(
-    Dimensions.get("window").width
-  );
-
-  // Listen for screen size changes
-  useEffect(() => {
-    const subscription = Dimensions.addEventListener("change", ({ window }) => {
-      setScreenWidth(window.width);
-    });
-
-    return () => subscription?.remove();
-  }, []);
-
-  // Responsive breakpoints
-  const isMobile = screenWidth < 375;
-  const isTablet = screenWidth >= 375 && screenWidth < 768;
-  const isDesktop = screenWidth >= 768;
+  const { isMobile, isTablet } = useResponsive();
 
   const styles = StyleSheet.create({
     container: {
       flex: 1,
     },
-
-    // Top section with close button
     header: {
       flexDirection: "row",
       justifyContent: "flex-end",
@@ -81,11 +62,9 @@ const PanicAttackWalkThroughScreen = ({
       fontSize: isMobile ? 18 : isTablet ? 20 : 16,
       fontWeight: "400",
     },
-    // Middle section - scrollable content
     contentContainer: {
       flex: 1,
     },
-    // Bottom section with step indicator and buttons
     footer: {
       paddingBottom: isMobile ? "3%" : isTablet ? "4%" : "5%",
       paddingHorizontal: isMobile ? "2%" : isTablet ? "1%" : "22%",
@@ -131,7 +110,6 @@ const PanicAttackWalkThroughScreen = ({
 
   return (
     <View style={styles.container}>
-      {/* Top: Close button */}
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.closeButton}
@@ -141,7 +119,6 @@ const PanicAttackWalkThroughScreen = ({
         </TouchableOpacity>
       </View>
 
-      {/* Middle: Scrollable step content */}
       <ScrollView
         style={styles.contentContainer}
         showsVerticalScrollIndicator={false}
@@ -165,7 +142,6 @@ const PanicAttackWalkThroughScreen = ({
         )}
       </ScrollView>
 
-      {/* Bottom: Step indicator and navigation buttons */}
       <View style={styles.footer}>
         <Text style={styles.stepIndicator}>Step {currentStep} of 4</Text>
         <View style={styles.buttonContainer}>
