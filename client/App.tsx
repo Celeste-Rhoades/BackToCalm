@@ -1,8 +1,9 @@
 import "react-native-gesture-handler";
 import React from "react";
 import AppNavigator from "./src/navigation/AppNavigator";
-import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import { initializeDisclaimerState } from "./src/store/authStore";
+import { useFonts } from "expo-font";
 import { useEffect } from "react";
 
 SplashScreen.preventAutoHideAsync();
@@ -14,14 +15,18 @@ export default function App() {
   });
 
   useEffect(() => {
-    if (fontsLoaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
+    const initialize = async () => {
+      // Load disclaimer state from AsyncStorage
+      await initializeDisclaimerState();
 
-  if (!fontsLoaded) {
-    return null;
-  }
+      // Hide splash screen after everything is loaded
+      if (fontsLoaded) {
+        SplashScreen.hideAsync();
+      }
+    };
+
+    initialize();
+  }, [fontsLoaded]);
 
   return <AppNavigator />;
 }

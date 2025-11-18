@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // User type - matches what backend returns
 interface User {
@@ -12,9 +13,11 @@ interface AuthState {
   user: User | null;
   token: string | null;
   isAuthenticated: boolean;
+  disclaimerAccepted: boolean;
 
   // Actions
   setAuth: (user: User, token: string) => void;
+  setDisclaimerAccepted: (accepted: boolean) => void;
   logout: () => void;
 }
 
@@ -23,6 +26,7 @@ export const useAuthStore = create<AuthState>(set => ({
   user: null,
   token: null,
   isAuthenticated: false,
+  disclaimerAccepted: false,
 
   // Actions
   setAuth: (user, token) => {
@@ -33,11 +37,28 @@ export const useAuthStore = create<AuthState>(set => ({
     });
   },
 
-  logout: () => {
+  setDisclaimerAccepted: async accepted => {
+    set({ disclaimerAccepted: accepted });
+    // Persist to AsyncStorage
+    if (accepted) {
+      await AsyncStorage.setItem("disclaimerAccepted", "true");
+    }
+  },
+  logout: async () => {
     set({
       user: null,
       token: null,
       isAuthenticated: false,
+      disclaimerAccepted: false,
     });
+    // Clear from AsyncStorage
+    await AsyncStorage.removeItem("disclaimerAccepted");
   },
 }));
+// Load disclaimer state from AsyncStorage on app start
+export const initializeDisclaimerState = async () => {
+  const stored = await AsyncStorage.getItem("disclaimerAccepted");
+  if (stored === "true") {
+    useAuthStore.getState().setDisclaimerAccepted(true);
+  }
+};
