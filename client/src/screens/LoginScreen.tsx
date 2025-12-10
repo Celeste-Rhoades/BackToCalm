@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
-import { colors, fonts } from "../utils/theme";
+import { colors, fonts, textStyles } from "../utils/theme";
 import { login } from "../services/authService";
 import { useAuthStore } from "../store/authStore";
 
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     textAlign: "center",
     color: colors.primary,
-    fontFamily: fonts.header,
+    ...textStyles.header,
   },
   input: {
     backgroundColor: colors.white,
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border,
     fontSize: 16,
-    fontFamily: fonts.body,
+    ...textStyles.body,
   },
   button: {
     backgroundColor: colors.primary,
@@ -110,14 +110,14 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 18,
     fontWeight: "600",
-    fontFamily: fonts.header,
+    ...textStyles.header,
   },
   signupText: {
     marginTop: 20,
     textAlign: "center",
     color: colors.primary,
     fontSize: 16,
-    fontFamily: fonts.body,
+    ...textStyles.body,
   },
   formContainer: {
     width: "100%",

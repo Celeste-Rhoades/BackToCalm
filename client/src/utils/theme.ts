@@ -32,3 +32,12 @@ export const fonts = {
   header: "Raleway",
   body: "PoiretOne",
 };
+export const textStyles = {
+  header: {
+    fontFamily: "Raleway",
+    textTransform: "uppercase" as const,
+  },
+  body: {
+    fontFamily: "PoiretOne",
+  },
+};
