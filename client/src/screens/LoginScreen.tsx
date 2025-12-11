@@ -10,13 +10,19 @@ import {
 import { colors, fonts, textStyles } from "../utils/theme";
 import { login } from "../services/authService";
 import { useAuthStore } from "../store/authStore";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../types/navigation";
 
-// Props type - for navigation
+type LoginScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "Login"
+>;
+
 type LoginScreenProps = {
-  navigation?: any;
+  navigation: LoginScreenNavigationProp;
 };
 
-const LoginScreen = ({ navigation }: any) => {
+const LoginScreen = ({ navigation }: LoginScreenProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

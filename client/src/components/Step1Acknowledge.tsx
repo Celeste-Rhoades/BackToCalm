@@ -13,12 +13,19 @@ import Slider from "@react-native-community/slider";
 import { colors, textStyles } from "../utils/theme";
 import { Picker } from "@react-native-picker/picker";
 
+type Step1AcknowledgeProps = {
+  selectedEmotion: string;
+  setSelectedEmotion: (emotion: string) => void;
+  initialRating: number;
+  setInitialRating: (rating: number) => void;
+};
+
 const Step1Acknowledge = ({
   selectedEmotion,
   setSelectedEmotion,
   initialRating,
   setInitialRating,
-}: any) => {
+}: Step1AcknowledgeProps) => {
   // Screen dimensions with state for responsive updates
   const [screenWidth, setScreenWidth] = useState(
     Dimensions.get("window").width

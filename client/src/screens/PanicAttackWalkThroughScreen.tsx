@@ -8,9 +8,23 @@ import {
   ScrollView,
 } from "react-native";
 import { colors, textStyles } from "../utils/theme";
+import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { DrawerParamList } from "../types/navigation";
+
 import Step1Acknowledge from "../components/Step1Acknowledge";
 
-const PanicAttackWalkThroughScreen = ({ navigation }: any) => {
+type PanicAttackWalkthroughScreenNavigationProp = DrawerNavigationProp<
+  DrawerParamList,
+  "PanicAttackWalkthrough"
+>;
+
+type PanicAttackWalkthroughScreenProps = {
+  navigation: PanicAttackWalkthroughScreenNavigationProp;
+};
+
+const PanicAttackWalkThroughScreen = ({
+  navigation,
+}: PanicAttackWalkthroughScreenProps) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [initialRating, setInitialRating] = useState(5);
   const [selectedEmotion, setSelectedEmotion] = useState("");

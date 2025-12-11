@@ -3,8 +3,16 @@ import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { colors, fonts, textStyles } from "../utils/theme";
 import { useAuthStore } from "../store/authStore";
 import { TouchableOpacity, Alert } from "react-native";
+import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { DrawerParamList } from "../types/navigation";
 
-const HomeScreen = ({ navigation }: any) => {
+type HomeScreenNavigationProp = DrawerNavigationProp<DrawerParamList, "Home">;
+
+type HomeScreenProps = {
+  navigation: HomeScreenNavigationProp;
+};
+
+const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const [screenWidth, setScreenWidth] = useState(
     Dimensions.get("window").width
   );

@@ -10,8 +10,19 @@ import {
 import { colors, fonts, textStyles } from "../utils/theme";
 import { signup } from "../services/authService";
 import { useAuthStore } from "../store/authStore";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../types/navigation";
 
-const SignupScreen = ({ navigation }: any) => {
+type SignupScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "Signup"
+>;
+
+type SignupScreenProps = {
+  navigation: SignupScreenNavigationProp;
+};
+
+const SignupScreen = ({ navigation }: SignupScreenProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");

@@ -2,12 +2,13 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useAuthStore } from "../store/authStore";
+import { RootStackParamList } from "../types/navigation";
 
 import DrawerNavigator from "./DrawerNavigator";
 import LoginScreen from "../screens/LoginScreen";
 import SignupScreen from "../screens/SignupScreen";
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
 export default function AppNavigator() {
   const isAuthenticated = useAuthStore(state => state.isAuthenticated);
