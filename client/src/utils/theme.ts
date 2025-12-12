@@ -28,3 +28,7 @@ export const colors = {
   border: "#C9CABB",
   white: "#FFFFFF",
 };
+export const fonts = {
+  header: "Raleway",
+  body: "PoiretOne",
+};

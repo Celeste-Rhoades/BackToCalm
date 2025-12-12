@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { colors } from "../utils/theme";
+import { colors, fonts } from "../utils/theme";
 import { useAuthStore } from "../store/authStore";
 import { TouchableOpacity, Alert } from "react-native";
 
@@ -17,11 +17,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: colors.primary,
     marginBottom: 10,
+    fontFamily: fonts.header,
   },
   email: {
     fontSize: 16,
     color: colors.mediumGray,
     marginBottom: 40,
+    fontFamily: fonts.body,
   },
   panicButton: {
     backgroundColor: colors.deepTeal, // Darker, more urgent color
@@ -36,6 +38,7 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 20,
     fontWeight: "bold",
+    fontFamily: fonts.header,
   },
   logoutButton: {
     backgroundColor: colors.mediumGray,
@@ -44,12 +47,14 @@ const styles = StyleSheet.create({
     width: "100%",
     maxWidth: 400,
     alignItems: "center",
-    marginTop: "auto", // Pushes to bottom
+    position: "absolute",
+    bottom: 20,
   },
   logoutButtonText: {
     color: colors.white,
     fontSize: 16,
     fontWeight: "600",
+    fontFamily: fonts.header,
   },
 });
 

@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
-import { colors } from "../utils/theme";
+import { colors, fonts } from "../utils/theme";
 import { signup } from "../services/authService";
 import { useAuthStore } from "../store/authStore";
 
@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     textAlign: "center",
     color: colors.primary,
+    fontFamily: fonts.header,
   },
   input: {
     backgroundColor: colors.white,
@@ -121,6 +122,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border,
     fontSize: 16,
+    fontFamily: fonts.body,
   },
   button: {
     backgroundColor: colors.primary,
@@ -133,12 +135,14 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 18,
     fontWeight: "600",
+    fontFamily: fonts.header,
   },
   signupText: {
     marginTop: 20,
     textAlign: "center",
     color: colors.primary,
     fontSize: 16,
+    fontFamily: fonts.body,
   },
   formContainer: {
     width: "100%",
