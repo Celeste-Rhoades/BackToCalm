@@ -19,6 +19,25 @@ const SignupScreen = ({ navigation }: any) => {
   const setAuth = useAuthStore(state => state.setAuth);
 
   const handleSignup = async () => {
+    // Validate inputs
+    if (!username.trim() || !email.trim() || !password.trim()) {
+      Alert.alert("Error", "All fields are required");
+      return;
+    }
+
+    if (password.length < 8) {
+      Alert.alert("Error", "Password must be at least 8 characters");
+      return;
+    }
+
+    if (!/(?=.*\d)|(?=.*[@$!%*?&])/.test(password)) {
+      Alert.alert(
+        "Error",
+        "Password must contain at least one number or special character"
+      );
+      return;
+    }
+
     try {
       const response = await signup(username, email, password);
       const { user, token } = response;
@@ -26,9 +45,10 @@ const SignupScreen = ({ navigation }: any) => {
 
       Alert.alert("Success", "Account created successfully!");
     } catch (error) {
-      Alert.alert("Error", "Invalid credentials. Please try again.");
+      Alert.alert("Error", "Failed to create account. Please try again.");
     }
   };
+
   return (
     <View style={styles.container}>
       {/* Title */}
@@ -63,12 +83,12 @@ const SignupScreen = ({ navigation }: any) => {
         autoCapitalize="none"
       />
 
-      {/* Login Button */}
+      {/* Sign Up Button */}
       <TouchableOpacity style={styles.button} onPress={handleSignup}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
 
-      {/* Sign up text */}
+      {/* Login text */}
       <TouchableOpacity onPress={() => navigation.navigate("Login")}>
         <Text style={styles.signupText}>Already have an account? Login</Text>
       </TouchableOpacity>
