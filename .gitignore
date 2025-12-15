@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+**/node_modules/
+package-lock.json
+yarn.lock
+
+# Environment variables
+.env
+**/.env
+.env.local
+.env*.local
+
+# Build outputs
+dist/
+build/
+**/dist/
+**/build/
+
+# Expo
+.expo/
+**/.expo/
+web-build/
+
+# OS files
+.DS_Store
+**/.DS_Store
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# React Native
+ios/
+android/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
