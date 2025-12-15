@@ -11,7 +11,7 @@ import { colors } from "../utils/theme";
 import { signup } from "../services/authService";
 import { useAuthStore } from "../store/authStore";
 
-const SignupScreen = () => {
+const SignupScreen = ({ navigation }: any) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -32,7 +32,7 @@ const SignupScreen = () => {
   return (
     <View style={styles.container}>
       {/* Title */}
-      <Text style={styles.title}>Back to Calm - Sign Up</Text>
+      <Text style={styles.title}>Back to Calm</Text>
 
       {/* Username Input */}
       <TextInput
@@ -69,7 +69,9 @@ const SignupScreen = () => {
       </TouchableOpacity>
 
       {/* Sign up text */}
-      <Text style={styles.signupText}>Already have an account? Login</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+        <Text style={styles.signupText}>Already have an account? Login</Text>
+      </TouchableOpacity>
     </View>
   );
 };

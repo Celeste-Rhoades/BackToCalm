@@ -16,7 +16,7 @@ type LoginScreenProps = {
   navigation?: any;
 };
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }: any) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -37,7 +37,7 @@ const LoginScreen = () => {
   return (
     <View style={styles.container}>
       {/* Title */}
-      <Text style={styles.title}>Back to Calm - Login</Text>
+      <Text style={styles.title}>Back to Calm </Text>
 
       {/* Email Input */}
       <TextInput
@@ -65,7 +65,9 @@ const LoginScreen = () => {
       </TouchableOpacity>
 
       {/* Sign up text */}
-      <Text style={styles.signupText}>Don't have an account? Sign up</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
+        <Text style={styles.signupText}>Don't have an account? Sign up</Text>
+      </TouchableOpacity>
     </View>
   );
 };
