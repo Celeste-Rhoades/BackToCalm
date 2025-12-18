@@ -51,47 +51,49 @@ const SignupScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      {/* Title */}
-      <Text style={styles.title}>Back to Calm</Text>
+      <View style={styles.formContainer}>
+        {/* Title */}
+        <Text style={styles.title}>Back to Calm</Text>
 
-      {/* Username Input */}
-      <TextInput
-        style={styles.input}
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
-        autoCapitalize="none"
-      />
+        {/* Username Input */}
+        <TextInput
+          style={styles.input}
+          placeholder="Username"
+          value={username}
+          onChangeText={setUsername}
+          autoCapitalize="none"
+        />
 
-      {/* Email Input */}
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
+        {/* Email Input */}
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
 
-      {/* Password Input */}
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry={true}
-        autoCapitalize="none"
-      />
+        {/* Password Input */}
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={true}
+          autoCapitalize="none"
+        />
 
-      {/* Sign Up Button */}
-      <TouchableOpacity style={styles.button} onPress={handleSignup}>
-        <Text style={styles.buttonText}>Sign Up</Text>
-      </TouchableOpacity>
+        {/* Sign Up Button */}
+        <TouchableOpacity style={styles.button} onPress={handleSignup}>
+          <Text style={styles.buttonText}>Sign Up</Text>
+        </TouchableOpacity>
 
-      {/* Login text */}
-      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-        <Text style={styles.signupText}>Already have an account? Login</Text>
-      </TouchableOpacity>
+        {/* Login text */}
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+          <Text style={styles.signupText}>Already have an account? Login</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -100,6 +102,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
     padding: 20,
     backgroundColor: colors.background,
   },
@@ -136,6 +139,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: colors.primary,
     fontSize: 16,
+  },
+  formContainer: {
+    width: "100%",
+    maxWidth: 400,
   },
 });
 
