@@ -38,3 +38,4 @@ android/
 *.p12
 *.key
 *.mobileprovisionclient/src/config/firebase.ts
+client/src/config/firebase.ts
