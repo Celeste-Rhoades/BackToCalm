@@ -21,6 +21,13 @@ export const colors = {
   blueGray: "#5D6F7D",
   navyBlue: "#3E4A54",
 
+  // Extended palette (Paint palette blues/teals)
+  lightestSage: "#d1e6d7",
+  lightSeafoam: "#b7d1c8",
+  softTealGreen: "#9ec0bb",
+  mediumTeal: "#84afad",
+  deeperTeal: "#6b9d9b",
+
   // Semantic colors (for specific uses)
   background: "#F5F5F0",
   primary: "#5F8A8B",
