@@ -51,6 +51,8 @@ const styles = StyleSheet.create({
 
 const PanicAttackWalkThroughScreen = ({ navigation }: any) => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [initialRating, setInitialRating] = useState(5);
+  const [selectedEmotion, setSelectedEmotion] = useState("");
 
   return (
     <View style={styles.container}>
