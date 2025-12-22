@@ -1,19 +1,27 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import Slider from "@react-native-community/slider";
 import { colors, textStyles } from "../utils/theme";
+
+// Get screen dimensions for responsive styling
+const { width } = Dimensions.get("window");
+const isSmallScreen = width < 375;
+const isMediumScreen = width >= 375 && width < 768;
 
 const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: colors.background,
-    padding: 20,
+    paddingHorizontal: "5%",
+    paddingVertical: "3%",
   },
   title: {
-    fontSize: 32,
+    fontSize: isSmallScreen ? 20 : isMediumScreen ? 24 : 32,
     fontWeight: "bold",
     color: colors.secondary,
+    textAlign: "center",
+    marginBottom: "2%",
     ...textStyles.body,
   },
   slider: {
@@ -21,9 +29,9 @@ const styles = StyleSheet.create({
     height: 40,
   },
   ratingText: {
-    fontSize: 18,
+    fontSize: isSmallScreen ? 14 : isMediumScreen ? 16 : 18,
     color: colors.secondary,
-    marginTop: 10,
+    marginTop: "2%",
     ...textStyles.body,
   },
   sliderContainer: {
@@ -31,18 +39,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     maxWidth: 400,
+    marginVertical: "2%",
   },
   subtitle: {
-    fontSize: 28,
+    fontSize: isSmallScreen ? 18 : isMediumScreen ? 22 : 28,
     color: colors.secondary,
-    marginBottom: 20,
-    paddingTop: 40,
+    marginBottom: "3%",
+    marginTop: "5%",
+    textAlign: "center",
     ...textStyles.body,
   },
   emotions: {
-    fontSize: 16,
+    fontSize: isSmallScreen ? 12 : isMediumScreen ? 14 : 16,
     ...textStyles.header,
-    padding: 20,
+    paddingHorizontal: "3%",
     color: colors.secondary,
   },
 });
@@ -55,10 +65,15 @@ const Step1Acknowledge = ({
 }: any) => {
   return (
     <View style={styles.container}>
+      {/* Step title */}
       <Text style={styles.title}>
         Step 1: Acknowledge my emotions non-judgmentally
       </Text>
-      <Text style={styles.subtitle}>How are you feeling?</Text>
+
+      {/* Rating question */}
+      <Text style={styles.subtitle}>At what level are your Emotions?</Text>
+
+      {/* Slider with labels */}
       <View style={styles.sliderContainer}>
         <Text style={styles.emotions}>Calm</Text>
         <Slider
@@ -74,6 +89,8 @@ const Step1Acknowledge = ({
         />
         <Text style={styles.emotions}>Unbearable</Text>
       </View>
+
+      {/* Display current rating */}
       <Text style={styles.ratingText}>
         Rating: {Math.round(initialRating)}/10
       </Text>

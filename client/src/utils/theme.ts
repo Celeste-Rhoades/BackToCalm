@@ -51,5 +51,6 @@ export const textStyles = {
   body: {
     fontFamily: "PoiretOne",
     textTransform: "uppercase" as const,
+    letterSpacing: 1.5,
   },
 };
