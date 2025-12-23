@@ -1,61 +1,16 @@
-import React from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  Alert,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import Slider from "@react-native-community/slider";
 import { colors, textStyles } from "../utils/theme";
-
-// Get screen dimensions for responsive styling
-const { width } = Dimensions.get("window");
-const isSmallScreen = width < 375;
-const isMediumScreen = width >= 375 && width < 768;
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: colors.background,
-    paddingHorizontal: "5%",
-    paddingVertical: "3%",
-  },
-  title: {
-    fontSize: isSmallScreen ? 20 : isMediumScreen ? 24 : 32,
-    fontWeight: "bold",
-    color: colors.secondary,
-    textAlign: "center",
-    marginBottom: "2%",
-    ...textStyles.body,
-  },
-  slider: {
-    flex: 1,
-    height: 40,
-  },
-  ratingText: {
-    fontSize: isSmallScreen ? 14 : isMediumScreen ? 16 : 18,
-    color: colors.secondary,
-    marginTop: "2%",
-    ...textStyles.body,
-  },
-  sliderContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    width: "100%",
-    maxWidth: 400,
-    marginVertical: "2%",
-  },
-  subtitle: {
-    fontSize: isSmallScreen ? 18 : isMediumScreen ? 22 : 28,
-    color: colors.secondary,
-    marginBottom: "3%",
-    marginTop: "5%",
-    textAlign: "center",
-    ...textStyles.body,
-  },
-  emotions: {
-    fontSize: isSmallScreen ? 12 : isMediumScreen ? 14 : 16,
-    ...textStyles.header,
-    paddingHorizontal: "3%",
-    color: colors.secondary,
-  },
-});
+import { Picker } from "@react-native-picker/picker";
 
 const Step1Acknowledge = ({
   selectedEmotion,
@@ -63,6 +18,72 @@ const Step1Acknowledge = ({
   initialRating,
   setInitialRating,
 }: any) => {
+  // Screen dimensions with state for responsive updates
+  const [screenWidth, setScreenWidth] = useState(
+    Dimensions.get("window").width
+  );
+
+  // Listen for screen size changes
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener("change", ({ window }) => {
+      setScreenWidth(window.width);
+    });
+
+    return () => subscription?.remove();
+  }, []);
+
+  // Responsive breakpoints
+  const isMobile = screenWidth < 375;
+  const isTablet = screenWidth >= 375 && screenWidth < 768;
+  const isDesktop = screenWidth >= 768;
+
+  const styles = StyleSheet.create({
+    container: {
+      justifyContent: "center",
+      alignItems: "center",
+      paddingHorizontal: isMobile ? "5%" : isTablet ? "8%" : "10%",
+      paddingVertical: isMobile ? "22%" : isTablet ? "18%" : "5%",
+    },
+    title: {
+      fontSize: isMobile ? 16 : isTablet ? 22 : 32,
+      fontWeight: "bold",
+      color: colors.secondary,
+      textAlign: "center",
+      marginBottom: isMobile ? "6%" : isTablet ? "3%" : "4%",
+      ...textStyles.body,
+    },
+    subtitle: {
+      fontSize: isMobile ? 14 : isTablet ? 18 : 28,
+      color: colors.secondary,
+      marginBottom: isMobile ? "4%" : isTablet ? "2%" : "2%",
+      textAlign: "center",
+      ...textStyles.body,
+    },
+    sliderContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      width: "100%",
+      maxWidth: 500,
+      marginVertical: isMobile ? "3%" : isTablet ? "3%" : ".25%",
+    },
+    emotions: {
+      fontSize: isMobile ? 10 : isTablet ? 12 : 16,
+      ...textStyles.header,
+      paddingHorizontal: isMobile ? "2%" : "3%",
+      color: colors.secondary,
+    },
+    slider: {
+      flex: 1,
+      height: 40,
+    },
+    ratingText: {
+      fontSize: isMobile ? 12 : isTablet ? 14 : 18,
+      color: colors.secondary,
+      marginTop: isMobile ? "1%" : isTablet ? "2%" : "1%",
+      ...textStyles.body,
+    },
+  });
+
   return (
     <View style={styles.container}>
       {/* Step title */}
@@ -73,7 +94,7 @@ const Step1Acknowledge = ({
       {/* Rating question */}
       <Text style={styles.subtitle}>At what level are your Emotions?</Text>
 
-      {/* Slider with labels */}
+      {/* Slider  */}
       <View style={styles.sliderContainer}>
         <Text style={styles.emotions}>Calm</Text>
         <Slider
