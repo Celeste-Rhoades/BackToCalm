@@ -80,13 +80,14 @@ const Step1Acknowledge = ({
       fontWeight: "bold",
       color: colors.secondary,
       textAlign: "center",
-      marginBottom: isMobile ? "6%" : isTablet ? "3%" : "1.5%",
+      marginBottom: isMobile ? "4%" : isTablet ? "3%" : "1.5%",
       ...textStyles.body,
     },
     subtitle: {
-      fontSize: isMobile ? 14 : isTablet ? 16 : 20,
+      fontSize: isMobile ? 16 : isTablet ? 18 : 20,
       color: colors.secondary,
-      marginBottom: isMobile ? "2%" : isTablet ? "2%" : "2%",
+      marginTop: isMobile ? "3%" : isTablet ? "2%" : "1.5%",
+      marginBottom: isMobile ? ".25%" : isTablet ? ".25%" : ".5%",
       textAlign: "center",
       ...textStyles.body,
     },
@@ -110,7 +111,7 @@ const Step1Acknowledge = ({
     ratingText: {
       fontSize: isMobile ? 12 : isTablet ? 14 : 18,
       color: colors.secondary,
-      marginTop: isMobile ? "1%" : isTablet ? "2%" : "1%",
+      marginTop: isMobile ? ".5%" : isTablet ? ".5%" : ".5%",
       ...textStyles.body,
     },
     introText: {
@@ -121,7 +122,7 @@ const Step1Acknowledge = ({
       ...textStyles.body,
     },
     emotionInputRow: {
-      flexDirection: "row",
+      flexDirection: isMobile ? "column" : "row",
       gap: isMobile ? 8 : isTablet ? 10 : 12,
       width: "100%",
       maxWidth: 500,
@@ -135,13 +136,14 @@ const Step1Acknowledge = ({
       borderRadius: 8,
       height: isMobile ? 44 : isTablet ? 48 : 52,
       justifyContent: "center",
+      ...textStyles.body,
     },
     textInput: {
       ...getInputStyle(),
       textTransform: "uppercase" as const,
     },
     voiceButton: {
-      width: 44,
+      width: isMobile ? "100%" : 44,
       height: isMobile ? 44 : isTablet ? 48 : 52,
       backgroundColor: colors.slateBlue,
       borderRadius: 8,
@@ -163,7 +165,7 @@ const Step1Acknowledge = ({
       fontSize: isMobile ? 14 : isTablet ? 16 : 20,
       color: colors.secondary,
       textAlign: "center",
-      marginTop: isMobile ? "6%" : isTablet ? "5%" : "4%",
+      marginTop: isMobile ? "4%" : isTablet ? "2%" : "1%",
       ...textStyles.body,
     },
   });
