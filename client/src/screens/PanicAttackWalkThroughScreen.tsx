@@ -76,7 +76,7 @@ const PanicAttackWalkThroughScreen = ({ navigation }: any) => {
       fontWeight: "bold",
       color: colors.primary,
       textAlign: "center",
-      marginBottom: isMobile ? "3%" : "4%",
+      marginBottom: isMobile ? "1%" : isTablet ? "1.5%" : "2%",
       ...textStyles.header,
     },
     buttonContainer: {
