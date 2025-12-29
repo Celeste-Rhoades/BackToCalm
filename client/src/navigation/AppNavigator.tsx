@@ -3,10 +3,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useAuthStore } from "../store/authStore";
 
-import HomeScreen from "../screens/HomeScreen";
+import DrawerNavigator from "./DrawerNavigator";
 import LoginScreen from "../screens/LoginScreen";
 import SignupScreen from "../screens/SignupScreen";
-import PanicAttackWalkThroughScreen from "../screens/PanicAttackWalkThroughScreen";
 
 const Stack = createStackNavigator();
 
@@ -28,12 +27,9 @@ export default function AppNavigator() {
           </>
         ) : (
           // Homescreen
+
           <>
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen
-              name="PanicAttackWalkthrough"
-              component={PanicAttackWalkThroughScreen}
-            />
+            <Stack.Screen name="Main" component={DrawerNavigator} />
           </>
         )}
       </Stack.Navigator>
