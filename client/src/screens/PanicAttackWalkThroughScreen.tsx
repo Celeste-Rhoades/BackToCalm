@@ -28,6 +28,8 @@ const PanicAttackWalkThroughScreen = ({
   const [currentStep, setCurrentStep] = useState(1);
   const [initialRating, setInitialRating] = useState(5);
   const [selectedEmotion, setSelectedEmotion] = useState("");
+  const [ownershipPhrases, setOwnershipPhrases] = useState<string[]>([]);
+  const [customOwnership, setCustomOwnership] = useState("");
 
   // Screen dimensions with state for responsive updates
   const [screenWidth, setScreenWidth] = useState(
