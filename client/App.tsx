@@ -16,10 +16,8 @@ export default function App() {
 
   useEffect(() => {
     const initialize = async () => {
-      // Load disclaimer state from AsyncStorage
       await initializeDisclaimerState();
 
-      // Hide splash screen after everything is loaded
       if (fontsLoaded) {
         SplashScreen.hideAsync();
       }
@@ -27,6 +25,10 @@ export default function App() {
 
     initialize();
   }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return <AppNavigator />;
 }
