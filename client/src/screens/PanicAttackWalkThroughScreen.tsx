@@ -12,6 +12,7 @@ import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { DrawerParamList } from "../types/navigation";
 
 import Step1Acknowledge from "../components/Step1Acknowledge";
+import Step2Ownership from "../components/Step2Ownership";
 
 type PanicAttackWalkthroughScreenNavigationProp = DrawerNavigationProp<
   DrawerParamList,
@@ -51,7 +52,9 @@ const PanicAttackWalkThroughScreen = ({
   const isDesktop = screenWidth >= 768;
 
   const styles = StyleSheet.create({
-    container: {},
+    container: {
+      flex: 1,
+    },
 
     // Top section with close button
     header: {
@@ -149,6 +152,15 @@ const PanicAttackWalkThroughScreen = ({
             setSelectedEmotion={setSelectedEmotion}
             initialRating={initialRating}
             setInitialRating={setInitialRating}
+          />
+        )}
+
+        {currentStep === 2 && (
+          <Step2Ownership
+            ownershipPhrases={ownershipPhrases}
+            setOwnershipPhrases={setOwnershipPhrases}
+            customOwnership={customOwnership}
+            setCustomOwnership={setCustomOwnership}
           />
         )}
       </ScrollView>
