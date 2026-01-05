@@ -66,7 +66,7 @@ const PanicAttackWalkThroughScreen = ({
       flex: 1,
     },
     footer: {
-      paddingBottom: isMobile ? "3%" : isTablet ? "4%" : "5%",
+      paddingBottom: isMobile ? "7%" : isTablet ? "7%" : "5%",
       paddingHorizontal: isMobile ? "2%" : isTablet ? "1%" : "22%",
     },
     stepIndicator: {

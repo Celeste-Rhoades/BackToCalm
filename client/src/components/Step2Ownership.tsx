@@ -81,7 +81,7 @@ const Step2Ownership = ({
       flexWrap: "wrap",
       width: "100%",
       justifyContent: "space-between",
-      marginBottom: "4%",
+      marginBottom: "1%",
       maxWidth: 900,
       alignItems: "center",
       paddingHorizontal: "2%",
