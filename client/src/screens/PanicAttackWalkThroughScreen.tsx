@@ -31,6 +31,9 @@ const PanicAttackWalkThroughScreen = ({
   const [selectedEmotion, setSelectedEmotion] = useState("");
   const [ownershipPhrases, setOwnershipPhrases] = useState<string[]>([]);
   const [customOwnership, setCustomOwnership] = useState("");
+  const [thoughtPatterns, setThoughtPatterns] = useState<string[]>([]);
+  const [thoughtTexts, setThoughtTexts] = useState<string[]>([]);
+  const [customThought, setCustomThought] = useState("");
 
   const { isMobile, isTablet } = useResponsive();
 
