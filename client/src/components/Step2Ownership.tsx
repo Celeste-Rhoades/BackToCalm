@@ -156,7 +156,7 @@ const Step2Ownership = ({
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
-        Step 2: I take ownership of my emotions without blaming myself by using
+        Step 2: I Take Ownership Of My Emotions Without Blaming Myself By Using
         phrases such as
       </Text>
 

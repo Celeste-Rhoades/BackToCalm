@@ -165,7 +165,7 @@ const Step1Acknowledge = ({
     <View style={styles.container}>
       {/* Step title */}
       <Text style={styles.title}>
-        Step 1: Acknowledge my emotions non-judgmentally
+        Step 1: Acknowledge My Emotions Non-Judgmentally
       </Text>
       <Text style={styles.introText}>
         By using the word "interesting" using phrases such as I feel

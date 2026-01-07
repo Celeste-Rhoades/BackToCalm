@@ -192,7 +192,7 @@ const Step3Identify = ({
   return (
     <View style={styles.container}>
       {/* Step title */}
-      <Text style={styles.title}>Step 3: My Thoughts create my feelings</Text>
+      <Text style={styles.title}>Step 3: My Thoughts Create My Feelings</Text>
 
       {/* Reflective question */}
       <Text style={styles.subTitle}>
