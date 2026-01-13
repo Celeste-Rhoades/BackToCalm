@@ -13,8 +13,10 @@ import { useResponsive } from "../utils/useResponsive";
 type Step2OwnershipProps = {
   ownershipPhrases: string[];
   setOwnershipPhrases: (phrases: string[]) => void;
+  customOwnershipTexts: string[];
+  setCustomOwnershipTexts: (texts: string[]) => void;
   customOwnership: string;
-  setCustomOwnership: (phrases: string) => void;
+  setCustomOwnership: (text: string) => void;
 };
 
 const phrases = [
@@ -35,6 +37,8 @@ const Step2Ownership = ({
   setOwnershipPhrases,
   customOwnership,
   setCustomOwnership,
+  customOwnershipTexts,
+  setCustomOwnershipTexts,
 }: Step2OwnershipProps) => {
   const { isMobile } = useResponsive();
 
@@ -52,12 +56,12 @@ const Step2Ownership = ({
       return;
     }
 
-    if (ownershipPhrases.includes(trimmedText)) {
+    if (customOwnershipTexts.includes(trimmedText)) {
       Alert.alert("Already Added", "You've already added this statement.");
       return;
     }
 
-    setOwnershipPhrases([...ownershipPhrases, trimmedText]);
+    setCustomOwnershipTexts([...customOwnershipTexts, trimmedText]);
     setCustomOwnership("");
     Alert.alert("Saved", "Your custom statement has been added.");
   };
@@ -151,6 +155,24 @@ const Step2Ownership = ({
       fontWeight: "600",
       ...textStyles.header,
     },
+    savedTextsContainer: {
+      width: "100%",
+      maxWidth: 700,
+      marginTop: "3%",
+    },
+    savedText: {
+      backgroundColor: colors.lightGray,
+      padding: 12,
+      borderRadius: 8,
+      marginBottom: 8,
+      borderLeftWidth: 3,
+      borderLeftColor: colors.primary,
+    },
+    savedTextContent: {
+      fontSize: isMobile ? 14 : 16,
+      color: colors.secondary,
+      ...textStyles.body,
+    },
   });
 
   return (
@@ -196,6 +218,17 @@ const Step2Ownership = ({
       <TouchableOpacity style={styles.saveButton} onPress={saveCustomStatement}>
         <Text style={styles.saveButtonText}>Save</Text>
       </TouchableOpacity>
+
+      {/* Display saved custom ownership texts */}
+      {customOwnershipTexts.length > 0 && (
+        <View style={styles.savedTextsContainer}>
+          {customOwnershipTexts.map((text, index) => (
+            <View key={index} style={styles.savedText}>
+              <Text style={styles.savedTextContent}>{text}</Text>
+            </View>
+          ))}
+        </View>
+      )}
     </View>
   );
 };

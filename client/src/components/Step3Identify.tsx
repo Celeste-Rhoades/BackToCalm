@@ -187,6 +187,24 @@ const Step3Identify = ({
       padding: 2,
       ...textStyles.body,
     },
+    savedThoughtsContainer: {
+      width: "100%",
+      maxWidth: 700,
+      marginTop: "3%",
+    },
+    savedThought: {
+      backgroundColor: colors.lightGray,
+      padding: 12,
+      borderRadius: 8,
+      marginBottom: 8,
+      borderLeftWidth: 3,
+      borderLeftColor: colors.primary,
+    },
+    savedThoughtText: {
+      fontSize: isMobile ? 14 : 16,
+      color: colors.secondary,
+      ...textStyles.body,
+    },
   });
 
   return (
@@ -255,6 +273,17 @@ const Step3Identify = ({
       <TouchableOpacity style={styles.saveButton} onPress={saveCustomThought}>
         <Text style={styles.saveButtonText}>Save</Text>
       </TouchableOpacity>
+
+      {/* Display saved custom thoughts */}
+      {thoughtTexts.length > 0 && (
+        <View style={styles.savedThoughtsContainer}>
+          {thoughtTexts.map((thought, index) => (
+            <View key={index} style={styles.savedThought}>
+              <Text style={styles.savedThoughtText}>{thought}</Text>
+            </View>
+          ))}
+        </View>
+      )}
     </View>
   );
 };

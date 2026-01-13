@@ -34,12 +34,12 @@ const PanicAttackWalkThroughScreen = ({
   // Array to store all completed rounds
   const [rounds, setRounds] = useState<PanicAttackRound[]>([]);
 
-  // Current round being filled out
   const [currentRound, setCurrentRound] = useState<PanicAttackRound>({
     roundNumber: 1,
     selectedEmotion: "",
     initialRating: 5,
     ownershipPhrases: [],
+    customOwnershipTexts: [],
     thoughtPatterns: [],
     thoughtTexts: [],
     selectedMantras: [],
@@ -48,7 +48,6 @@ const PanicAttackWalkThroughScreen = ({
     timestamp: new Date(),
   });
 
-  // Temporary inputs (not part of saved round data)
   const [customOwnership, setCustomOwnership] = useState("");
   const [customThought, setCustomThought] = useState("");
   const [customReplacement, setCustomReplacement] = useState("");
@@ -162,6 +161,10 @@ const PanicAttackWalkThroughScreen = ({
             ownershipPhrases={currentRound.ownershipPhrases}
             setOwnershipPhrases={phrases =>
               setCurrentRound({ ...currentRound, ownershipPhrases: phrases })
+            }
+            customOwnershipTexts={currentRound.customOwnershipTexts}
+            setCustomOwnershipTexts={texts =>
+              setCurrentRound({ ...currentRound, customOwnershipTexts: texts })
             }
             customOwnership={customOwnership}
             setCustomOwnership={setCustomOwnership}

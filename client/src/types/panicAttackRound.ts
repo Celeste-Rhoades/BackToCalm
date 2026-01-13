@@ -8,5 +8,6 @@ export interface PanicAttackRound {
   selectedMantras: string[];
   replacementTexts: string[];
   finalRating: number;
+  customOwnershipTexts: string[];
   timestamp: Date;
 }
