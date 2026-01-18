@@ -137,7 +137,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         <Text style={styles.panicButtonText}>I'm Having a Panic Attack</Text>
       </TouchableOpacity>
 
-      {/* Log Panic Attack Button - ADD THIS */}
+      {/* Log Panic Attack Button */}
       <TouchableOpacity
         style={styles.logButton}
         onPress={() => Alert.alert("Feature Coming Soon")}
