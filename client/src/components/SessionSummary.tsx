@@ -71,6 +71,42 @@ const SessionSummary = ({
       marginTop: "2%",
       ...textStyles.header,
     },
+    stepSection: {
+      width: "100%",
+      maxWidth: 700,
+      backgroundColor: colors.lightGray,
+      padding: 12,
+      borderRadius: 8,
+      marginBottom: 12,
+      borderLeftWidth: 3,
+      borderLeftColor: colors.primary,
+    },
+    stepDataLabel: {
+      fontSize: isMobile ? 14 : 16,
+      fontWeight: "600",
+      color: colors.secondary,
+      marginBottom: 4,
+      ...textStyles.header,
+    },
+    stepDataText: {
+      fontSize: isMobile ? 14 : 16,
+      color: colors.secondary,
+      marginBottom: 8,
+      ...textStyles.body,
+    },
+    listItem: {
+      fontSize: isMobile ? 14 : 16,
+      color: colors.secondary,
+      marginLeft: 12,
+      marginBottom: 4,
+      ...textStyles.body,
+    },
+    emptyText: {
+      fontSize: isMobile ? 14 : 16,
+      color: colors.mediumGray,
+      fontStyle: "italic",
+      ...textStyles.body,
+    },
   });
 
   return (
