@@ -131,6 +131,50 @@ const SessionSummary = ({
         />
         <Text style={styles.ratingText}>{currentRound.finalRating}</Text>
       </View>
+      {/* Step 1: Acknowledge */}
+      <View style={styles.stepSection}>
+        <Text style={styles.stepDataLabel}>Step 1: Acknowledge</Text>
+
+        <Text style={styles.stepDataText}>
+          Emotion:{" "}
+          {currentRound.selectedEmotion === "" ? (
+            <Text style={styles.emptyText}>Not selected</Text>
+          ) : (
+            currentRound.selectedEmotion
+          )}
+        </Text>
+        <Text style={styles.stepDataText}>
+          Initial Rating: {currentRound.initialRating}
+        </Text>
+      </View>
+      {/* Step 2: Ownership */}
+      <View style={styles.stepSection}>
+        <Text style={styles.stepDataLabel}>Step 2: Ownership</Text>
+
+        {/* Ownership phrases from checkboxes */}
+        <Text style={styles.stepDataText}>Ownership Phrases:</Text>
+        {currentRound.ownershipPhrases.length === 0 ? (
+          <Text style={styles.emptyText}>None selected</Text>
+        ) : (
+          currentRound.ownershipPhrases.map((phrase, index) => (
+            <Text key={index} style={styles.listItem}>
+              • {phrase}
+            </Text>
+          ))
+        )}
+
+        {/* Custom ownership statements from text input */}
+        <Text style={styles.stepDataText}>Custom Statements:</Text>
+        {currentRound.customOwnershipTexts.length === 0 ? (
+          <Text style={styles.emptyText}>None added</Text>
+        ) : (
+          currentRound.customOwnershipTexts.map((text, index) => (
+            <Text key={index} style={styles.listItem}>
+              • {text}
+            </Text>
+          ))
+        )}
+      </View>
     </View>
   );
 };
