@@ -209,7 +209,8 @@ const Step4Replace = ({
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
-        Step 4: Replace My Negative Thoughts With Mantras
+        Step 4: What Could I Tell Myself That Will Be More Postive, Truthful,
+        and Reassuring?
       </Text>
 
       {/* Section 4A: Generic Mantras */}

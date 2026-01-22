@@ -73,7 +73,7 @@ const Step2Ownership = ({
       paddingVertical: "5%",
     },
     title: {
-      fontSize: isMobile ? 16 : 18,
+      fontSize: isMobile ? 18 : 20,
       fontWeight: "bold",
       color: colors.secondary,
       textAlign: "center",

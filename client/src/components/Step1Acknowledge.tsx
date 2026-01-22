@@ -67,12 +67,12 @@ const Step1Acknowledge = ({
       paddingVertical: isMobile ? "5%" : isTablet ? "8%" : "1%",
     },
     title: {
-      fontSize: isMobile ? 16 : isTablet ? 22 : 32,
+      fontSize: isMobile ? 18 : 20,
       fontWeight: "bold",
       color: colors.secondary,
       textAlign: "center",
       marginBottom: isMobile ? "4%" : isTablet ? "3%" : "1.5%",
-      ...textStyles.body,
+      ...textStyles.header,
     },
     subtitle: {
       fontSize: isMobile ? 16 : isTablet ? 18 : 20,
@@ -165,10 +165,10 @@ const Step1Acknowledge = ({
     <View style={styles.container}>
       {/* Step title */}
       <Text style={styles.title}>
-        Step 1: Acknowledge My Emotions Non-Judgmentally
+        Step 1: I Acknowledge My Emotions Non-Judgmentally
       </Text>
       <Text style={styles.introText}>
-        By using the word "interesting" using phrases such as I feel
+        By using the word "interesting" or by using phrases such as I feel
       </Text>
       <View style={styles.emotionInputRow}>
         {/* Picker - platform specific */}

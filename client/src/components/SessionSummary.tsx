@@ -131,10 +131,10 @@ const SessionSummary = ({
         />
         <Text style={styles.ratingText}>{currentRound.finalRating}</Text>
       </View>
+
       {/* Step 1: Acknowledge */}
       <View style={styles.stepSection}>
         <Text style={styles.stepDataLabel}>Step 1: Acknowledge</Text>
-
         <Text style={styles.stepDataText}>
           Emotion:{" "}
           {currentRound.selectedEmotion === "" ? (
@@ -147,6 +147,7 @@ const SessionSummary = ({
           Initial Rating: {currentRound.initialRating}
         </Text>
       </View>
+
       {/* Step 2: Ownership */}
       <View style={styles.stepSection}>
         <Text style={styles.stepDataLabel}>Step 2: Ownership</Text>
@@ -175,6 +176,67 @@ const SessionSummary = ({
           ))
         )}
       </View>
+
+      {/* Step 3: Identify Thought Patterns */}
+      <View style={styles.stepSection}>
+        <Text style={styles.stepDataLabel}>
+          Step 3: Identify Thought Patterns
+        </Text>
+
+        {/* Thought pattern categories from checkboxes */}
+        <Text style={styles.stepDataText}>Thought Pattern Categories:</Text>
+        {currentRound.thoughtPatterns.length === 0 ? (
+          <Text style={styles.emptyText}>None selected</Text>
+        ) : (
+          currentRound.thoughtPatterns.map((pattern, index) => (
+            <Text key={index} style={styles.listItem}>
+              • {pattern}
+            </Text>
+          ))
+        )}
+        {/* Custom thoughts from text input */}
+        <Text style={styles.stepDataText}>Custom Thoughts:</Text>
+        {currentRound.thoughtTexts.length === 0 ? (
+          <Text style={styles.emptyText}>None added</Text>
+        ) : (
+          currentRound.thoughtTexts.map((thought, index) => (
+            <Text key={index} style={styles.listItem}>
+              • {thought}
+            </Text>
+          ))
+        )}
+      </View>
+      {/* Step 4: Replace my negative thoughts*/}
+      <View style={styles.stepSection}>
+        <Text style={styles.stepDataLabel}>
+          Step 3: Identify Thought Patterns
+        </Text>
+
+        {/* Thought pattern categories from checkboxes */}
+        <Text style={styles.stepDataText}>Thought Pattern Categories:</Text>
+        {currentRound.thoughtPatterns.length === 0 ? (
+          <Text style={styles.emptyText}>None selected</Text>
+        ) : (
+          currentRound.thoughtPatterns.map((pattern, index) => (
+            <Text key={index} style={styles.listItem}>
+              • {pattern}
+            </Text>
+          ))
+        )}
+        {/* Custom thoughts from text input */}
+        <Text style={styles.stepDataText}>Custom Thoughts:</Text>
+        {currentRound.thoughtTexts.length === 0 ? (
+          <Text style={styles.emptyText}>None added</Text>
+        ) : (
+          currentRound.thoughtTexts.map((thought, index) => (
+            <Text key={index} style={styles.listItem}>
+              • {thought}
+            </Text>
+          ))
+        )}
+      </View>
     </View>
   );
 };
+
+export default SessionSummary;
