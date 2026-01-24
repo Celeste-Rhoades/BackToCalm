@@ -30,13 +30,8 @@ type PanicAttackWalkthroughScreenProps = {
 const PanicAttackWalkThroughScreen = ({
   navigation,
 }: PanicAttackWalkthroughScreenProps) => {
-  // Track which step user is currently on
   const [currentStep, setCurrentStep] = useState(1);
-
-  // Store all completed rounds from this panic attack session
   const [rounds, setRounds] = useState<PanicAttackRound[]>([]);
-
-  // Current round user is actively filling out
   const [currentRound, setCurrentRound] = useState<PanicAttackRound>({
     roundNumber: 1,
     selectedEmotion: "",
@@ -50,20 +45,14 @@ const PanicAttackWalkThroughScreen = ({
     finalRating: 5,
     timestamp: new Date(),
   });
-
-  // Temporary text inputs - not saved to round until user clicks Save
   const [customOwnership, setCustomOwnership] = useState("");
   const [customThought, setCustomThought] = useState("");
   const [customReplacement, setCustomReplacement] = useState("");
 
   const { isMobile, isTablet } = useResponsive();
 
-  // Save current round and start a new round
   const handleStartOver = () => {
-    // Add current round to rounds array
-    setRounds([...rounds, { ...currentRound, roundNumber: rounds.length + 1 }]);
-
-    // Reset current round to fresh state
+    setRounds([...rounds, currentRound]);
     setCurrentRound({
       roundNumber: rounds.length + 2,
       selectedEmotion: "",
@@ -77,28 +66,18 @@ const PanicAttackWalkThroughScreen = ({
       finalRating: 5,
       timestamp: new Date(),
     });
-
-    // Clear temporary inputs
     setCustomOwnership("");
     setCustomThought("");
     setCustomReplacement("");
-
-    // Go back to step 1
     setCurrentStep(1);
   };
 
-  // Save session to Firebase (placeholder for now)
   const handleComplete = () => {
-    // Add current round to rounds array
-    const allRounds = [
-      ...rounds,
-      { ...currentRound, roundNumber: rounds.length + 1 },
-    ];
-
-    // TODO: Save allRounds to Firebase
+    const allRounds = [...rounds, currentRound];
     console.log("Session complete! Rounds:", allRounds);
-
-    // For now, just go back to home
+    setCustomOwnership("");
+    setCustomThought("");
+    setCustomReplacement("");
     navigation.goBack();
   };
 
@@ -179,12 +158,10 @@ const PanicAttackWalkThroughScreen = ({
 
   return (
     <View style={styles.container}>
-      {/* Header with close button */}
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.closeButton}
           onPress={() => {
-            // Reset to step 1 so next session starts fresh
             setCurrentStep(1);
             navigation.goBack();
           }}
@@ -197,7 +174,6 @@ const PanicAttackWalkThroughScreen = ({
         style={styles.contentContainer}
         showsVerticalScrollIndicator={false}
       >
-        {/* Step 1: Acknowledge emotion and rate intensity */}
         {currentStep === 1 && (
           <Step1Acknowledge
             selectedEmotion={currentRound.selectedEmotion}
@@ -211,7 +187,6 @@ const PanicAttackWalkThroughScreen = ({
           />
         )}
 
-        {/* Step 2: Take ownership with phrases and custom statements */}
         {currentStep === 2 && (
           <Step2Ownership
             ownershipPhrases={currentRound.ownershipPhrases}
@@ -227,7 +202,6 @@ const PanicAttackWalkThroughScreen = ({
           />
         )}
 
-        {/* Step 3: Identify thought patterns and specific thoughts */}
         {currentStep === 3 && (
           <Step3Identify
             thoughtPatterns={currentRound.thoughtPatterns}
@@ -243,7 +217,6 @@ const PanicAttackWalkThroughScreen = ({
           />
         )}
 
-        {/* Step 4: Replace negative thoughts with mantras */}
         {currentStep === 4 && (
           <Step4Replace
             selectedMantras={currentRound.selectedMantras}
@@ -258,7 +231,7 @@ const PanicAttackWalkThroughScreen = ({
             }
           />
         )}
-        {/* Step 5: Session Summary */}
+
         {currentStep === 5 && (
           <SessionSummary
             rounds={rounds}
@@ -270,14 +243,11 @@ const PanicAttackWalkThroughScreen = ({
         )}
       </ScrollView>
 
-      {/* Footer with step indicator and navigation buttons */}
       <View style={styles.footer}>
-        {/* Show "Session Summary" on step 5, otherwise show current step number */}
         <Text style={styles.stepIndicator}>
           {currentStep === 5 ? "Session Summary" : `Step ${currentStep} of 4`}
         </Text>
         <View style={styles.buttonContainer}>
-          {/* Back button only shows after step 1 */}
           {currentStep > 1 && (
             <TouchableOpacity
               style={styles.backButton}
@@ -286,15 +256,10 @@ const PanicAttackWalkThroughScreen = ({
               <Text style={styles.nextButtonText}>Back</Text>
             </TouchableOpacity>
           )}
-          {/* Next button only shows before step 5 */}
           {currentStep < 5 && (
             <TouchableOpacity
               style={styles.nextButton}
-              onPress={() => {
-                if (currentStep < 5) {
-                  setCurrentStep(currentStep + 1);
-                }
-              }}
+              onPress={() => setCurrentStep(currentStep + 1)}
             >
               <Text style={styles.nextButtonText}>Next</Text>
             </TouchableOpacity>
