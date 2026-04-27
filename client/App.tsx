@@ -10,8 +10,11 @@ SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    Raleway: require("./assets/fonts/Raleway-VariableFont_wght.ttf"),
+    RalewayLight: require("./assets/fonts/Raleway-Light.ttf"),
+    RalewayReg: require("./assets/fonts/Raleway-Regular.ttf"),
     PoiretOne: require("./assets/fonts/PoiretOne-Regular.ttf"),
+    QuicksandLight: require("./assets/fonts/Quicksand-Light.ttf"),
+    QuicksandReg: require("./assets/fonts/Quicksand-Regular.ttf"),
   });
 
   useEffect(() => {

@@ -120,7 +120,7 @@ const Step2Ownership = ({
       fontWeight: "bold",
     },
     phraseText: {
-      fontSize: isMobile ? 16 : 14,
+      fontSize: isMobile ? 18 : 16,
       color: colors.secondary,
       flex: 1,
       ...textStyles.body,
@@ -135,7 +135,7 @@ const Step2Ownership = ({
       minHeight: 60,
       maxWidth: 700,
       textAlign: "center",
-      fontSize: isMobile ? 16 : 14,
+      fontSize: isMobile ? 18 : 16,
       color: colors.secondary,
       ...textStyles.body,
     },

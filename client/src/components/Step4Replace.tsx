@@ -96,7 +96,7 @@ const Step4Replace = ({
       width: "100%",
       minHeight: 60,
       maxWidth: 700,
-      fontSize: isMobile ? 16 : 14,
+      fontSize: isMobile ? 16 : 18,
       color: colors.secondary,
       textAlignVertical: "top",
       textAlign: "center",
@@ -114,12 +114,12 @@ const Step4Replace = ({
     },
     saveButtonText: {
       color: colors.white,
-      fontSize: isMobile ? 16 : 14,
+      fontSize: isMobile ? 16 : 18,
       fontWeight: "600",
       ...textStyles.header,
     },
     paragraph: {
-      fontSize: isMobile ? 14 : 16,
+      fontSize: isMobile ? 16 : 18,
       color: colors.primary,
       maxWidth: 700,
       marginBottom: "1%",
@@ -168,12 +168,12 @@ const Step4Replace = ({
     },
     mantraText: {
       flex: 1,
-      fontSize: isMobile ? 14 : 16,
+      fontSize: isMobile ? 16 : 18,
       color: colors.secondary,
       ...textStyles.body,
     },
     examplesText: {
-      fontSize: isMobile ? 12 : 14,
+      fontSize: isMobile ? 16 : 18,
       color: colors.primary,
       maxWidth: 700,
       marginBottom: "3%",
@@ -194,7 +194,7 @@ const Step4Replace = ({
       borderLeftColor: colors.slateBlue,
     },
     savedThoughtText: {
-      fontSize: isMobile ? 14 : 16,
+      fontSize: isMobile ? 16 : 18,
       color: colors.secondary,
       ...textStyles.body,
     },

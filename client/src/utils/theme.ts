@@ -40,17 +40,16 @@ export const colors = {
   white: "#FFFFFF",
 };
 export const fonts = {
-  header: "Raleway",
-  body: "PoiretOne",
+  header: "QuicksandLight",
+  body: "Raleway",
 };
 export const textStyles = {
   header: {
-    fontFamily: "Raleway",
+    fontFamily: "Quicksandreg",
     textTransform: "uppercase" as const,
   },
   body: {
-    fontFamily: "PoiretOne",
-    textTransform: "uppercase" as const,
-    letterSpacing: 1.5,
+    fontFamily: "RalewayLight",
+    // textTransform: "uppercase" as const,
   },
 };
