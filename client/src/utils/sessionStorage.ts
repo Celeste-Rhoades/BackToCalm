@@ -14,7 +14,7 @@ interface StoredSession {
   savedAt: Date;
 }
 
-const storeSession = async (session: StoredSession): Promise<void> => {
+export const storeSession = async (session: StoredSession): Promise<void> => {
   try {
     const sessionData = JSON.stringify(session);
     await AsyncStorage.setItem("currentSession", sessionData);
@@ -22,7 +22,7 @@ const storeSession = async (session: StoredSession): Promise<void> => {
     console.error(error);
   }
 };
-const retrieveSession = async (): Promise<StoredSession | null> => {
+export const retrieveSession = async (): Promise<StoredSession | null> => {
   try {
     const sessionData = await AsyncStorage.getItem("currentSession");
 
@@ -34,5 +34,12 @@ const retrieveSession = async (): Promise<StoredSession | null> => {
   } catch (error) {
     console.error(error);
     return null;
+  }
+};
+export const deleteSession = async (): Promise<void> => {
+  try {
+    await AsyncStorage.removeItem("currentSession");
+  } catch (error) {
+    console.error(error);
   }
 };
