@@ -29,8 +29,10 @@ export const retrieveSession = async (): Promise<StoredSession | null> => {
     // If nothing is stored, return null
     if (sessionData === null) return null;
 
-    // Convert string back to object and return it
-    return JSON.parse(sessionData) as StoredSession;
+    const session = JSON.parse(sessionData) as StoredSession;
+    // Convert savedAt back to a real Date object — JSON.parse returns it as a string
+    session.savedAt = new Date(session.savedAt);
+    return session;
   } catch (error) {
     console.error(error);
     return null;
