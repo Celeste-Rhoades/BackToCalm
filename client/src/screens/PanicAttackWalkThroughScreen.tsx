@@ -11,6 +11,10 @@ import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { DrawerParamList } from "../types/navigation";
 import { useResponsive } from "../utils/useResponsive";
 import { PanicAttackRound } from "../types/panicAttackRound";
+import { StoredSession } from "../utils/sessionStorage";
+import ResumeSessionModal from "../components/ResumeSessionModal";
+import IdleWarningModal from "../components/IdleWarningModal";
+import { useIdleDetection } from "../hooks/useIdleDetection";
 
 import Step1Acknowledge from "../components/Step1Acknowledge";
 import Step2Ownership from "../components/Step2Ownership";
@@ -48,6 +52,11 @@ const PanicAttackWalkThroughScreen = ({
   const [customOwnership, setCustomOwnership] = useState("");
   const [customThought, setCustomThought] = useState("");
   const [customReplacement, setCustomReplacement] = useState("");
+  const [resumeSessionModal, setResumeSessionModal] = useState(false);
+  const [idelWarningModal, setIdleWarningModal] = useState(false);
+  const [storedSession, setStoredSession] = useState<StoredSession | null>(
+    null,
+  );
 
   const { isMobile, isTablet } = useResponsive();
 

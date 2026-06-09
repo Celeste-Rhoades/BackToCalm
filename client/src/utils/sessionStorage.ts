@@ -3,7 +3,7 @@ import { PanicAttackRound } from "../types/panicAttackRound";
 
 type SessionStatus = "stillAnswering" | "finishedNotSaved";
 
-interface StoredSession {
+export interface StoredSession {
   currentStep: number;
   currentRound: PanicAttackRound;
   rounds: PanicAttackRound[];
