@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -11,7 +11,7 @@ import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { DrawerParamList } from "../types/navigation";
 import { useResponsive } from "../utils/useResponsive";
 import { PanicAttackRound } from "../types/panicAttackRound";
-import { StoredSession } from "../utils/sessionStorage";
+import { retrieveSession, StoredSession } from "../utils/sessionStorage";
 import ResumeSessionModal from "../components/ResumeSessionModal";
 import IdleWarningModal from "../components/IdleWarningModal";
 import { useIdleDetection } from "../hooks/useIdleDetection";
@@ -59,6 +59,7 @@ const PanicAttackWalkThroughScreen = ({
   );
 
   const { isMobile, isTablet } = useResponsive();
+  const { isIdle, setIsIdle, resetTimer } = useIdleDetection();
 
   const handleStartOver = () => {
     setRounds([...rounds, currentRound]);
@@ -89,6 +90,24 @@ const PanicAttackWalkThroughScreen = ({
     setCustomReplacement("");
     navigation.goBack();
   };
+
+  useEffect(() => {
+    const checkForSession = async () => {
+      const session = await retrieveSession();
+      if (session) {
+        setStoredSession(session);
+        setResumeSessionModal(true);
+      }
+    };
+    checkForSession();
+  }, []);
+
+  // Show idle warning when user has been inactive for 15 minutes
+  useEffect(() => {
+    if (isIdle) {
+      setIdleWarningModal(true);
+    }
+  }, [isIdle]);
 
   const styles = StyleSheet.create({
     container: {
@@ -275,6 +294,21 @@ const PanicAttackWalkThroughScreen = ({
           )}
         </View>
       </View>
+      <ResumeSessionModal
+        visible={resumeSessionModal}
+        savedAt={storedSession?.savedAt ?? new Date()}
+        onResume={() => setResumeSessionModal(false)}
+        onStartFresh={() => setResumeSessionModal(false)}
+      />
+      <IdleWarningModal
+        visible={idelWarningModal}
+        onContinue={() => {
+          setIsIdle(false);
+          resetTimer();
+          setIdleWarningModal(false);
+        }}
+        onStartOver={handleStartOver}
+      />
     </View>
   );
 };
