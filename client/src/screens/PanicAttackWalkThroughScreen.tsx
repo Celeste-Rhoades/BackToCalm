@@ -5,13 +5,21 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  AppState,
+  Alert,
+  Platform,
 } from "react-native";
 import { colors, textStyles } from "../utils/theme";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { DrawerParamList } from "../types/navigation";
 import { useResponsive } from "../utils/useResponsive";
 import { PanicAttackRound } from "../types/panicAttackRound";
-import { retrieveSession, StoredSession } from "../utils/sessionStorage";
+import {
+  retrieveSession,
+  StoredSession,
+  storeSession,
+  deleteSession,
+} from "../utils/sessionStorage";
 import ResumeSessionModal from "../components/ResumeSessionModal";
 import IdleWarningModal from "../components/IdleWarningModal";
 import { useIdleDetection } from "../hooks/useIdleDetection";
@@ -102,6 +110,31 @@ const PanicAttackWalkThroughScreen = ({
     checkForSession();
   }, []);
 
+  useEffect(() => {
+    const appStateListener = AppState.addEventListener(
+      "change",
+      nextAppState => {
+        if (nextAppState === "background" || nextAppState === "inactive") {
+          if (currentStep > 1 || currentRound.selectedEmotion !== "") {
+            storeSession({
+              currentStep: currentStep,
+              currentRound: currentRound,
+              rounds: rounds,
+              customOwnership: customOwnership,
+              customThought: customThought,
+              customReplacement: customReplacement,
+              status: "stillAnswering",
+              savedAt: new Date(),
+            });
+          }
+        }
+      },
+    );
+    return () => {
+      appStateListener.remove();
+    };
+  }, []);
+
   // Show idle warning when user has been inactive for 15 minutes
   useEffect(() => {
     if (isIdle) {
@@ -190,8 +223,30 @@ const PanicAttackWalkThroughScreen = ({
         <TouchableOpacity
           style={styles.closeButton}
           onPress={() => {
-            setCurrentStep(1);
-            navigation.goBack();
+            if (Platform.OS === "web") {
+              const confirmed = window.confirm(
+                "Are you sure you want to close? Your progress will not be saved.",
+              );
+              if (confirmed) {
+                deleteSession();
+                navigation.goBack();
+              }
+            } else {
+              Alert.alert(
+                "Are you sure you want to close out this session?",
+                "Your progress will not be saved.",
+                [
+                  { text: "Cancel", onPress: () => {} },
+                  {
+                    text: "Leave",
+                    onPress: () => {
+                      deleteSession();
+                      navigation.goBack();
+                    },
+                  },
+                ],
+              );
+            }
           }}
         >
           <Text style={styles.closeButtonText}>✕</Text>
@@ -297,8 +352,39 @@ const PanicAttackWalkThroughScreen = ({
       <ResumeSessionModal
         visible={resumeSessionModal}
         savedAt={storedSession?.savedAt ?? new Date()}
-        onResume={() => setResumeSessionModal(false)}
-        onStartFresh={() => setResumeSessionModal(false)}
+        onResume={() => {
+          if (storedSession) {
+            setCurrentStep(storedSession.currentStep);
+            setCurrentRound(storedSession.currentRound);
+            setRounds(storedSession.rounds);
+            setCustomOwnership(storedSession.customOwnership);
+            setCustomThought(storedSession.customThought);
+            setCustomReplacement(storedSession.customReplacement);
+          }
+          setResumeSessionModal(false);
+        }}
+        onStartFresh={() => {
+          deleteSession();
+          setCurrentStep(1);
+          setRounds([]);
+          setCurrentRound({
+            roundNumber: 1,
+            selectedEmotion: "",
+            initialRating: 5,
+            ownershipPhrases: [],
+            customOwnershipTexts: [],
+            thoughtPatterns: [],
+            thoughtTexts: [],
+            selectedMantras: [],
+            replacementTexts: [],
+            finalRating: 5,
+            timestamp: new Date(),
+          });
+          setCustomOwnership("");
+          setCustomThought("");
+          setCustomReplacement("");
+          setResumeSessionModal(false);
+        }}
       />
       <IdleWarningModal
         visible={idelWarningModal}
