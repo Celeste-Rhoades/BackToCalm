@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
-export const useIdleDetection = () => {
+export const useIdleDetection = ({ enabled }: { enabled: boolean }) => {
   const [isIdle, setIsIdle] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -10,7 +10,7 @@ export const useIdleDetection = () => {
       clearTimeout(timerRef.current);
     }
 
-    // Start a fresh 15-minute countdown. marks idle when starts and action restarts it
+    // Start a fresh countdown — marks idle when timer expires
     timerRef.current = setTimeout(
       () => {
         setIsIdle(true);
@@ -18,6 +18,18 @@ export const useIdleDetection = () => {
       15 * 60 * 1000,
     );
   };
+
+  // Start timer on mount, clean up on unmount to prevent memory leaks
+  useEffect(() => {
+    if (enabled) {
+      resetTimer();
+    }
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, [enabled]);
 
   return { isIdle, setIsIdle, resetTimer };
 };

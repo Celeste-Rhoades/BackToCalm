@@ -7,6 +7,7 @@ import {
   Pressable,
   StyleSheet,
 } from "react-native";
+import { colors, textStyles } from "../utils/theme";
 
 interface ResumeSessionModalProps {
   visible: boolean;
@@ -33,6 +34,9 @@ const ResumeSessionModal = ({
     <Modal visible={visible} transparent={true}>
       <Pressable style={styles.overlay} onPress={onStartFresh}>
         <View style={styles.card} onStartShouldSetResponder={() => true}>
+          <TouchableOpacity style={styles.closeButton} onPress={onStartFresh}>
+            <Text style={styles.closeButtonText}>x</Text>
+          </TouchableOpacity>
           <Text style={styles.title}>Welcome Back</Text>
           <Text style={styles.subtitle}>{formattedTime}</Text>
 
@@ -73,10 +77,7 @@ const styles = StyleSheet.create({
     width: "85%",
     maxWidth: 400,
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 8,
+    boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.25)",
     elevation: 5, // Android shadow
   },
 
@@ -124,6 +125,20 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#666666",
     marginBottom: 4,
+  },
+  closeButton: {
+    position: "absolute",
+    top: 6,
+    right: 10,
+    backgroundColor: colors.slateBlue,
+    padding: 4,
+    borderRadius: 4,
+    boxShadow: "0px 2px 3.84px rgba(0, 0, 0, 0.25)",
+  },
+  closeButtonText: {
+    color: colors.white,
+    fontSize: 16,
+    fontWeight: "400",
   },
 });
 

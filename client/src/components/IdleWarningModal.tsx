@@ -4,9 +4,10 @@ import {
   View,
   Text,
   TouchableOpacity,
-  TouchableWithoutFeedback,
+  Pressable,
   StyleSheet,
 } from "react-native";
+import { colors, textStyles } from "../utils/theme";
 
 const styles = StyleSheet.create({
   // Covers full screen, darkens background, centers the card
@@ -25,10 +26,7 @@ const styles = StyleSheet.create({
     width: "85%",
     maxWidth: 400,
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 8,
+    boxShadow: "0px 2px 3.84px rgba(0, 0, 0, 0.25)",
     elevation: 5, // Android shadow
   },
 
@@ -77,6 +75,20 @@ const styles = StyleSheet.create({
     color: "#666666",
     marginBottom: 4,
   },
+  closeButton: {
+    position: "absolute",
+    top: 6,
+    right: 10,
+    backgroundColor: colors.slateBlue,
+    padding: 4,
+    borderRadius: 4,
+    boxShadow: "0px 2px 3.84px rgba(0, 0, 0, 0.25)",
+  },
+  closeButtonText: {
+    color: colors.white,
+    fontSize: 16,
+    fontWeight: "400",
+  },
 });
 
 interface IdleWarningProps {
@@ -92,31 +104,32 @@ const IdleWarningModal = ({
 }: IdleWarningProps) => {
   return (
     <Modal visible={visible} transparent={true}>
-      <TouchableWithoutFeedback onPress={onStartOver}>
-        <View style={styles.overlay}>
-          <View style={styles.card} onStartShouldSetResponder={() => true}>
-            <Text style={styles.title}>Still There?</Text>
-            <Text style={styles.subtitle}>
-              Would you like to continue your session or start over?
-            </Text>
+      <Pressable style={styles.overlay} onPress={onStartOver}>
+        <View style={styles.card} onStartShouldSetResponder={() => true}>
+          <TouchableOpacity style={styles.closeButton} onPress={onStartOver}>
+            <Text style={styles.closeButtonText}>x</Text>
+          </TouchableOpacity>
+          <Text style={styles.title}>Still There?</Text>
+          <Text style={styles.subtitle}>
+            Would you like to continue your session or start over?
+          </Text>
 
-            <View style={styles.buttonRow}>
-              <TouchableOpacity
-                style={[styles.button, styles.buttonSecondary]}
-                onPress={onStartOver}
-              >
-                <Text style={styles.buttonText}>Start Over</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.button, styles.buttonPrimary]}
-                onPress={onContinue}
-              >
-                <Text style={styles.buttonText}>Continue</Text>
-              </TouchableOpacity>
-            </View>
+          <View style={styles.buttonRow}>
+            <TouchableOpacity
+              style={[styles.button, styles.buttonSecondary]}
+              onPress={onStartOver}
+            >
+              <Text style={styles.buttonText}>Start Over</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, styles.buttonPrimary]}
+              onPress={onContinue}
+            >
+              <Text style={styles.buttonText}>Continue</Text>
+            </TouchableOpacity>
           </View>
         </View>
-      </TouchableWithoutFeedback>
+      </Pressable>
     </Modal>
   );
 };

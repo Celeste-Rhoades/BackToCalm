@@ -67,7 +67,9 @@ const PanicAttackWalkThroughScreen = ({
   );
 
   const { isMobile, isTablet } = useResponsive();
-  const { isIdle, setIsIdle, resetTimer } = useIdleDetection();
+  const { isIdle, setIsIdle, resetTimer } = useIdleDetection({
+    enabled: !resumeSessionModal,
+  });
 
   const handleStartOver = () => {
     setRounds([...rounds, currentRound]);
@@ -393,7 +395,12 @@ const PanicAttackWalkThroughScreen = ({
           resetTimer();
           setIdleWarningModal(false);
         }}
-        onStartOver={handleStartOver}
+        onStartOver={() => {
+          setIsIdle(false);
+          resetTimer();
+          handleStartOver();
+          setIdleWarningModal(false);
+        }}
       />
     </View>
   );

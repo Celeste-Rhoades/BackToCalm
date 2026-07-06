@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -28,6 +28,10 @@ const Step1Acknowledge = ({
 }: Step1AcknowledgeProps) => {
   // Use responsive hook instead of local state
   const { isMobile, isTablet, isDesktop } = useResponsive();
+
+  const [inputMethod, setInputMethod] = useState<"dropdown" | "text" | null>(
+    null,
+  );
 
   // Emotions array for dropdown
   const emotions = [
@@ -74,6 +78,7 @@ const Step1Acknowledge = ({
       marginBottom: isMobile ? "4%" : isTablet ? "3%" : "1.5%",
       ...textStyles.header,
     },
+
     subtitle: {
       fontSize: isMobile ? 16 : isTablet ? 18 : 20,
       color: colors.secondary,
@@ -159,6 +164,22 @@ const Step1Acknowledge = ({
       marginTop: isMobile ? "4%" : isTablet ? "2%" : "1%",
       ...textStyles.body,
     },
+    clearButton: {
+      backgroundColor: colors.mutedTeal,
+      padding: isMobile ? 10 : 10,
+      borderRadius: 8,
+      minWidth: isMobile ? 80 : 60,
+      alignItems: "center",
+      marginTop: 10,
+      boxShadow: "0px 2px 3.84px rgba(0, 0, 0, 0.25)",
+      elevation: 5,
+    },
+    clearButtonText: {
+      color: colors.white,
+      fontSize: isMobile ? 14 : 14,
+      fontWeight: "600",
+      ...textStyles.header,
+    },
   });
 
   return (
@@ -171,61 +192,78 @@ const Step1Acknowledge = ({
         By using the word "interesting" or by using phrases such as I feel
       </Text>
       <View style={styles.emotionInputRow}>
-        {/* Picker - platform specific */}
-        {Platform.OS === "web" ? (
-          <select
-            value={selectedEmotion}
-            onChange={e => setSelectedEmotion(e.target.value)}
-            style={{
-              ...getInputStyle(),
-              textTransform: "uppercase",
-              borderStyle: "solid",
-              outline: "none",
-              textAlign: "center",
-              color: colors.secondary,
-            }}
-          >
-            {emotions.map((emotion, index) => (
-              <option
-                key={index}
-                value={emotion}
+        {/* Show dropdown only when no input method chosen or dropdown was used */}
+        {(inputMethod === null || inputMethod === "dropdown") && (
+          <>
+            {Platform.OS === "web" ? (
+              <select
+                value={selectedEmotion}
+                onChange={e => {
+                  setSelectedEmotion(e.target.value);
+                  setInputMethod("dropdown");
+                }}
                 style={{
-                  color: colors.secondary,
-                  backgroundColor: colors.lightGray,
-                  fontFamily: "PoiretOne",
+                  ...getInputStyle(),
                   textTransform: "uppercase",
+                  borderStyle: "solid",
+                  outline: "none",
+                  textAlign: "center",
+                  color: colors.secondary,
                 }}
               >
-                {emotion || "Select emotion..."}
-              </option>
-            ))}
-          </select>
-        ) : (
-          /*  mobile */
-          <View style={styles.pickerContainer}>
-            <Picker
-              selectedValue={selectedEmotion}
-              onValueChange={value => setSelectedEmotion(value)}
-            >
-              {emotions.map((emotion, index) => (
-                <Picker.Item
-                  key={index}
-                  label={emotion || "Select emotion..."}
-                  value={emotion}
-                />
-              ))}
-            </Picker>
-          </View>
+                {emotions.map((emotion, index) => (
+                  <option
+                    key={index}
+                    value={emotion}
+                    style={{
+                      color: colors.secondary,
+                      backgroundColor: colors.lightGray,
+                      fontFamily: "PoiretOne",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {emotion || "Select emotion..."}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <View style={styles.pickerContainer}>
+                <Picker
+                  selectedValue={selectedEmotion}
+                  onValueChange={value => {
+                    setSelectedEmotion(value);
+                    setInputMethod("dropdown");
+                  }}
+                >
+                  {emotions.map((emotion, index) => (
+                    <Picker.Item
+                      key={index}
+                      label={emotion || "Select emotion..."}
+                      value={emotion}
+                    />
+                  ))}
+                </Picker>
+              </View>
+            )}
+          </>
         )}
-        {/* Text input for custom emotion */}
-        <TextInput
-          style={styles.textInput}
-          value={selectedEmotion}
-          onChangeText={setSelectedEmotion}
-          placeholder="Or type emotion..."
-          placeholderTextColor={colors.mediumGray}
-        />
-        {/* Voice input button */}
+
+        {/* Show text input only when no input method chosen or text was used */}
+        {(inputMethod === null || inputMethod === "text") && (
+          <TextInput
+            style={styles.textInput}
+            value={selectedEmotion}
+            onChangeText={value => {
+              setSelectedEmotion(value);
+              setInputMethod("text");
+            }}
+            placeholder="Or type emotion..."
+            placeholderTextColor={colors.mediumGray}
+            onSubmitEditing={() => setInputMethod("text")}
+          />
+        )}
+
+        {/* Voice button always visible */}
         <TouchableOpacity
           style={styles.voiceButton}
           onPress={() => Alert.alert("Voice Input", "Voice input coming soon!")}
@@ -240,7 +278,17 @@ const Step1Acknowledge = ({
           I feel?
         </Text>
       )}
-
+      {selectedEmotion !== "" && (
+        <TouchableOpacity
+          style={styles.clearButton}
+          onPress={() => {
+            setSelectedEmotion("");
+            setInputMethod(null);
+          }}
+        >
+          <Text style={styles.clearButtonText}>Clear Emotion</Text>
+        </TouchableOpacity>
+      )}
       {/* Rating question */}
       <Text style={styles.subtitle}>At what level are your Emotions?</Text>
 
