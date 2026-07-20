@@ -9,6 +9,8 @@ yarn.lock
 **/.env
 .env.local
 .env*.local
+.env
+server/.env
 
 # Build outputs
 dist/
@@ -39,6 +41,7 @@ android/
 *.key
 *.mobileprovision
 
+
 # Firebase config
 client/src/config/firebase.ts
-
+src/utils/firebaseConfig.ts
