@@ -1,61 +1,81 @@
 import { create } from "zustand";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  onAuthStateChanged,
+  signOut,
+  User as FirebaseUser,
+} from "firebase/auth";
+import { auth } from "../config/firebase";
 
-// User type - matches what backend returns
+// User shape derived from Firebase Auth, not our own backend
 interface User {
-  id: string;
-  username: string;
-  email: string;
+  uid: string;
+  email: string | null;
+  username: string | null;
 }
 
-// Auth state shape
 interface AuthState {
   user: User | null;
-  token: string | null;
   isAuthenticated: boolean;
   disclaimerAccepted: boolean;
+  authInitialized: boolean;
 
-  // Actions
-  setAuth: (user: User, token: string) => void;
+  setUser: (user: User | null) => void;
   setDisclaimerAccepted: (accepted: boolean) => void;
-  logout: () => void;
+  logout: () => Promise<void>;
 }
 
+// Maps Firebase's user object to our leaner User type
+const mapFirebaseUser = (firebaseUser: FirebaseUser): User => ({
+  uid: firebaseUser.uid,
+  email: firebaseUser.email,
+  username: firebaseUser.displayName,
+});
+
 export const useAuthStore = create<AuthState>(set => ({
-  // Initial state
   user: null,
-  token: null,
   isAuthenticated: false,
   disclaimerAccepted: false,
+  authInitialized: false,
 
-  // Actions
-  setAuth: (user, token) => {
+  setUser: user => {
     set({
-      user: user,
-      token: token,
-      isAuthenticated: true,
+      user,
+      isAuthenticated: user !== null,
     });
   },
 
   setDisclaimerAccepted: async accepted => {
     set({ disclaimerAccepted: accepted });
-    // Persist to AsyncStorage
     if (accepted) {
       await AsyncStorage.setItem("disclaimerAccepted", "true");
     }
   },
+
   logout: async () => {
+    await signOut(auth);
     set({
       user: null,
-      token: null,
       isAuthenticated: false,
       disclaimerAccepted: false,
     });
-    // Clear from AsyncStorage
     await AsyncStorage.removeItem("disclaimerAccepted");
   },
 }));
-// Load disclaimer state from AsyncStorage on app start
+
+// Call once at app startup (App.tsx). Firebase persists sessions across
+// app restarts, so this restores the logged-in user automatically.
+export const initializeAuthListener = () => {
+  onAuthStateChanged(auth, firebaseUser => {
+    if (firebaseUser) {
+      useAuthStore.getState().setUser(mapFirebaseUser(firebaseUser));
+    } else {
+      useAuthStore.getState().setUser(null);
+    }
+    useAuthStore.setState({ authInitialized: true });
+  });
+};
+
 export const initializeDisclaimerState = async () => {
   const stored = await AsyncStorage.getItem("disclaimerAccepted");
   if (stored === "true") {

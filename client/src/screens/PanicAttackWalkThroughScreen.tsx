@@ -20,6 +20,9 @@ import {
   storeSession,
   deleteSession,
 } from "../utils/sessionStorage";
+import { useAuthStore } from "../store/authStore";
+import { db } from "../config/firebase";
+import { doc, addDoc, collection } from "firebase/firestore";
 import ResumeSessionModal from "../components/ResumeSessionModal";
 import IdleWarningModal from "../components/IdleWarningModal";
 import { useIdleDetection } from "../hooks/useIdleDetection";
@@ -71,6 +74,8 @@ const PanicAttackWalkThroughScreen = ({
     enabled: !resumeSessionModal,
   });
 
+  const user = useAuthStore(state => state.user);
+
   const handleStartOver = () => {
     setRounds([...rounds, currentRound]);
     setCurrentRound({
@@ -92,12 +97,46 @@ const PanicAttackWalkThroughScreen = ({
     setCurrentStep(1);
   };
 
-  const handleComplete = () => {
+  const handleComplete = async () => {
     const allRounds = [...rounds, currentRound];
-    console.log("Session complete! Rounds:", allRounds);
+
+    try {
+      await addDoc(collection(db, "sessions"), {
+        // Firebase Auth uid, not the old Zustand/Mongo user.id
+        userId: user?.uid,
+        completedAt: new Date(),
+        rounds: allRounds,
+      });
+    } catch (error) {
+      console.error("Failed to save session:", error);
+      Alert.alert("Error", "We couldn't save your session. Please try again.");
+      return;
+    }
+
+    // Clear the locally auto-saved session since it's now safely in Firestore
+    deleteSession();
+
+    // Reset local state so reopening this screen starts a fresh session,
+    // not wherever the last one left off
     setCustomOwnership("");
     setCustomThought("");
     setCustomReplacement("");
+    setCurrentStep(1);
+    setRounds([]);
+    setCurrentRound({
+      roundNumber: 1,
+      selectedEmotion: "",
+      initialRating: 5,
+      ownershipPhrases: [],
+      customOwnershipTexts: [],
+      thoughtPatterns: [],
+      thoughtTexts: [],
+      selectedMantras: [],
+      replacementTexts: [],
+      finalRating: 5,
+      timestamp: new Date(),
+    });
+
     navigation.goBack();
   };
 

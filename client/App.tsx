@@ -2,7 +2,10 @@ import "react-native-gesture-handler";
 import React from "react";
 import AppNavigator from "./src/navigation/AppNavigator";
 import * as SplashScreen from "expo-splash-screen";
-import { initializeDisclaimerState } from "./src/store/authStore";
+import {
+  initializeDisclaimerState,
+  initializeAuthListener,
+} from "./src/store/authStore";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 
@@ -18,6 +21,10 @@ export default function App() {
   });
 
   useEffect(() => {
+    // Starts listening for Firebase Auth state as soon as the app boots,
+    // so the store knows who's logged in before any screen renders
+    initializeAuthListener();
+
     const initialize = async () => {
       await initializeDisclaimerState();
 

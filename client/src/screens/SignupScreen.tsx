@@ -7,9 +7,9 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "../config/firebase";
 import { colors, fonts, textStyles } from "../utils/theme";
-import { signup } from "../services/authService";
-import { useAuthStore } from "../store/authStore";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../types/navigation";
 
@@ -27,10 +27,7 @@ const SignupScreen = ({ navigation }: SignupScreenProps) => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
 
-  const setAuth = useAuthStore(state => state.setAuth);
-
   const handleSignup = async () => {
-    // Validate inputs
     if (!username.trim() || !email.trim() || !password.trim()) {
       Alert.alert("Error", "All fields are required");
       return;
@@ -44,16 +41,19 @@ const SignupScreen = ({ navigation }: SignupScreenProps) => {
     if (!/(?=.*\d)|(?=.*[@$!%*?&])/.test(password)) {
       Alert.alert(
         "Error",
-        "Password must contain at least one number or special character"
+        "Password must contain at least one number or special character",
       );
       return;
     }
 
     try {
-      const response = await signup(username, email, password);
-      const { user, token } = response;
-      setAuth(user, token);
-
+      const credential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+      // Store username as displayName since Firebase Auth has no native username field
+      await updateProfile(credential.user, { displayName: username });
       Alert.alert("Success", "Account created successfully!");
     } catch (error) {
       Alert.alert("Error", "Failed to create account. Please try again.");
@@ -63,10 +63,8 @@ const SignupScreen = ({ navigation }: SignupScreenProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
-        {/* Title */}
         <Text style={styles.title}>BACK TO CALM</Text>
 
-        {/* Username Input */}
         <TextInput
           style={styles.input}
           placeholder="Username"
@@ -75,7 +73,6 @@ const SignupScreen = ({ navigation }: SignupScreenProps) => {
           autoCapitalize="none"
         />
 
-        {/* Email Input */}
         <TextInput
           style={styles.input}
           placeholder="Email"
@@ -85,7 +82,6 @@ const SignupScreen = ({ navigation }: SignupScreenProps) => {
           autoCapitalize="none"
         />
 
-        {/* Password Input */}
         <TextInput
           style={styles.input}
           placeholder="Password"
@@ -95,12 +91,10 @@ const SignupScreen = ({ navigation }: SignupScreenProps) => {
           autoCapitalize="none"
         />
 
-        {/* Sign Up Button */}
         <TouchableOpacity style={styles.button} onPress={handleSignup}>
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
 
-        {/* Login text */}
         <TouchableOpacity onPress={() => navigation.navigate("Login")}>
           <Text style={styles.signupText}>Already have an account? Login</Text>
         </TouchableOpacity>

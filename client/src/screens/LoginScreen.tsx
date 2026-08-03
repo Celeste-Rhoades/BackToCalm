@@ -7,9 +7,9 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../config/firebase";
 import { colors, fonts, textStyles } from "../utils/theme";
-import { login } from "../services/authService";
-import { useAuthStore } from "../store/authStore";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../types/navigation";
 
@@ -26,15 +26,11 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const setAuth = useAuthStore(state => state.setAuth);
-
   const handleLogin = async () => {
     try {
-      const response = await login(email, password);
-      const { user, token } = response;
-      setAuth(user, token);
-
-      Alert.alert("Success", "Logged in sucessfully");
+      // onAuthStateChanged listener in authStore picks this up automatically
+      await signInWithEmailAndPassword(auth, email, password);
+      Alert.alert("Success", "Logged in successfully");
     } catch (error) {
       Alert.alert("Error", "Invalid credentials. Please try again.");
     }
@@ -43,10 +39,8 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
-        {/* Title */}
         <Text style={styles.title}>Back to Calm </Text>
 
-        {/* Email Input */}
         <TextInput
           style={styles.input}
           placeholder="Email"
@@ -56,7 +50,6 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
           autoCapitalize="none"
         />
 
-        {/* Password Input */}
         <TextInput
           style={styles.input}
           placeholder="Password"
@@ -66,12 +59,10 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
           autoCapitalize="none"
         />
 
-        {/* Login Button */}
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
-        {/* Sign up text */}
         <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
           <Text style={styles.signupText}>Don't have an account? Sign up</Text>
         </TouchableOpacity>
@@ -79,6 +70,7 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
