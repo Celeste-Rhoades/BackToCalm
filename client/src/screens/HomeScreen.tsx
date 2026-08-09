@@ -14,7 +14,7 @@ type HomeScreenProps = {
 
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const [screenWidth, setScreenWidth] = useState(
-    Dimensions.get("window").width
+    Dimensions.get("window").width,
   );
   useEffect(() => {
     const subscription = Dimensions.addEventListener("change", ({ window }) => {

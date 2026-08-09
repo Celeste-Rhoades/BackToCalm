@@ -42,6 +42,4 @@ android/
 *.mobileprovision
 
 
-# Firebase config
-client/src/config/firebase.ts
-src/utils/firebaseConfig.ts
+
