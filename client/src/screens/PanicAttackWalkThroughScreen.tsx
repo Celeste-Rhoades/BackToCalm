@@ -10,8 +10,7 @@ import {
   Platform,
 } from "react-native";
 import { colors, textStyles } from "../utils/theme";
-import { DrawerNavigationProp } from "@react-navigation/drawer";
-import { DrawerParamList } from "../types/navigation";
+import { PanicAttackWalkthroughScreenNavigationProp } from "../types/navigation";
 import { useResponsive } from "../utils/useResponsive";
 import { PanicAttackRound } from "../types/panicAttackRound";
 import {
@@ -32,11 +31,6 @@ import Step2Ownership from "../components/Step2Ownership";
 import Step3Identify from "../components/Step3Identify";
 import Step4Replace from "../components/Step4Replace";
 import SessionSummary from "../components/SessionSummary";
-
-type PanicAttackWalkthroughScreenNavigationProp = DrawerNavigationProp<
-  DrawerParamList,
-  "PanicAttackWalkthrough"
->;
 
 type PanicAttackWalkthroughScreenProps = {
   navigation: PanicAttackWalkthroughScreenNavigationProp;
