@@ -1,4 +1,4 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { StackNavigationProp } from "@react-navigation/stack";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 
 // Define all stack screens and their params
@@ -14,16 +14,21 @@ export type DrawerParamList = {
   PanicAttackWalkthrough: undefined;
 };
 
-// Navigation prop types for each screen
-export type LoginScreenNavigationProp = NativeStackNavigationProp<
+// Navigation prop types for each screen — matches createStackNavigator
+// (@react-navigation/stack), the navigator actually used in AppNavigator.tsx
+export type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
   "Login"
 >;
-export type SignupScreenNavigationProp = NativeStackNavigationProp<
+export type SignupScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
   "Signup"
 >;
 export type HomeScreenNavigationProp = DrawerNavigationProp<
   DrawerParamList,
   "Home"
+>;
+export type PanicAttackWalkthroughScreenNavigationProp = DrawerNavigationProp<
+  DrawerParamList,
+  "PanicAttackWalkthrough"
 >;

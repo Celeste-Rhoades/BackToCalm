@@ -10,13 +10,7 @@ import {
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { colors, fonts, textStyles } from "../utils/theme";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../types/navigation";
-
-type LoginScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  "Login"
->;
+import { LoginScreenNavigationProp } from "../types/navigation";
 
 type LoginScreenProps = {
   navigation: LoginScreenNavigationProp;

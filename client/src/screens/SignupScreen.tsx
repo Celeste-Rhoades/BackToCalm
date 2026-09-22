@@ -10,13 +10,7 @@ import {
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { colors, fonts, textStyles } from "../utils/theme";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../types/navigation";
-
-type SignupScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  "Signup"
->;
+import { SignupScreenNavigationProp } from "../types/navigation";
 
 type SignupScreenProps = {
   navigation: SignupScreenNavigationProp;
@@ -52,7 +46,7 @@ const SignupScreen = ({ navigation }: SignupScreenProps) => {
         email,
         password,
       );
-      // Store username as displayName since Firebase Auth has no native username field
+
       await updateProfile(credential.user, { displayName: username });
       Alert.alert("Success", "Account created successfully!");
     } catch (error) {
