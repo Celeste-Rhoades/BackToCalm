@@ -133,6 +133,10 @@ const PanicAttackWalkThroughScreen = ({
 
     navigation.goBack();
   };
+  useEffect(() => {
+    console.log("walkthrough mounted");
+    return () => console.log("walkthrough unmounted");
+  }, []);
 
   useEffect(() => {
     const checkForSession = async () => {
