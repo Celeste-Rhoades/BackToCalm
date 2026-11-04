@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { colors, textStyles } from "../utils/theme";
 import { useResponsive } from "../utils/useResponsive";
+import { toggleItem } from "../utils/toggleItem";
 
 type Step2OwnershipProps = {
   ownershipPhrases: string[];
@@ -43,11 +44,7 @@ const Step2Ownership = ({
   const { isMobile } = useResponsive();
 
   const togglePhrase = (phrase: string) => {
-    if (ownershipPhrases.includes(phrase)) {
-      setOwnershipPhrases(ownershipPhrases.filter(p => p !== phrase));
-    } else {
-      setOwnershipPhrases([...ownershipPhrases, phrase]);
-    }
+    setOwnershipPhrases(toggleItem(ownershipPhrases, phrase));
   };
 
   const saveCustomStatement = () => {
