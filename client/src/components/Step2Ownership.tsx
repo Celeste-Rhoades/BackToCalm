@@ -10,6 +10,7 @@ import {
 import { colors, textStyles } from "../utils/theme";
 import { useResponsive } from "../utils/useResponsive";
 import { toggleItem } from "../utils/toggleItem";
+import { saveCustomText } from "../utils/saveCustomText";
 
 type Step2OwnershipProps = {
   ownershipPhrases: string[];
@@ -48,19 +49,13 @@ const Step2Ownership = ({
   };
 
   const saveCustomStatement = () => {
-    const trimmedText = customOwnership.trim();
-    if (!trimmedText) {
-      return;
-    }
-
-    if (customOwnershipTexts.includes(trimmedText)) {
-      Alert.alert("Already Added", "You've already added this statement.");
-      return;
-    }
-
-    setCustomOwnershipTexts([...customOwnershipTexts, trimmedText]);
-    setCustomOwnership("");
-    Alert.alert("Saved", "Your custom statement has been added.");
+    saveCustomText({
+      typedText: customOwnership,
+      savedText: customOwnershipTexts,
+      setSavedText: setCustomOwnershipTexts,
+      setTypedText: setCustomOwnership,
+      itemName: "statement",
+    });
   };
 
   const styles = StyleSheet.create({

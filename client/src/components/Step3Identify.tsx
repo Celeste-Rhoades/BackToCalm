@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import { colors, textStyles } from "../utils/theme";
 import { useResponsive } from "../utils/useResponsive";
+import { toggleItem } from "../utils/toggleItem";
+import { saveCustomText } from "../utils/saveCustomText";
 
 type Step3IdentifyProps = {
   thoughtPatterns: string[];
@@ -46,34 +48,18 @@ const Step3Identify = ({
 
   // Toggle thought pattern category selection
   const togglePattern = (phrase: string) => {
-    if (thoughtPatterns.includes(phrase)) {
-      // Remove from array if already selected
-      setThoughtPatterns(thoughtPatterns.filter(p => p !== phrase));
-    } else {
-      // Add to array if not selected
-      setThoughtPatterns([...thoughtPatterns, phrase]);
-    }
+    setThoughtPatterns(toggleItem(thoughtPatterns, phrase));
   };
 
   // Save custom thought text to array
   const saveCustomThought = () => {
-    const trimmedText = customThought.trim();
-
-    // Don't save if empty
-    if (!trimmedText) {
-      return;
-    }
-
-    // Check for duplicates
-    if (thoughtTexts.includes(trimmedText)) {
-      Alert.alert("Already Added", "You've already added this thought.");
-      return;
-    }
-
-    // Add to array, clear input, show confirmation
-    setThoughtTexts([...thoughtTexts, trimmedText]);
-    setCustomThought("");
-    Alert.alert("Saved", "Your thought has been added.");
+    saveCustomText({
+      typedText: customThought,
+      savedText: thoughtTexts,
+      setSavedText: setThoughtTexts,
+      setTypedText: setCustomThought,
+      itemName: "thought",
+    });
   };
 
   const styles = StyleSheet.create({

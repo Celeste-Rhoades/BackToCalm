@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import { colors, textStyles } from "../utils/theme";
 import { useResponsive } from "../utils/useResponsive";
+import { toggleItem } from "../utils/toggleItem";
+import { saveCustomText } from "../utils/saveCustomText";
 
 interface Step4ReplaceProps {
   selectedMantras: string[];
@@ -42,28 +44,18 @@ const Step4Replace = ({
 
   // Toggle mantra selection on/off
   const togglePhrase = (mantra: string) => {
-    if (selectedMantras.includes(mantra)) {
-      setSelectedMantras(selectedMantras.filter(m => m !== mantra));
-    } else {
-      setSelectedMantras([...selectedMantras, mantra]);
-    }
+    setSelectedMantras(toggleItem(selectedMantras, mantra));
   };
 
   // Save custom replacement thought to array
   const saveCustomStatement = () => {
-    const trimmedText = customReplacement.trim();
-    if (!trimmedText) {
-      return;
-    }
-
-    if (replacementTexts.includes(trimmedText)) {
-      Alert.alert("Already Added", "You've already added this statement.");
-      return;
-    }
-
-    setReplacementTexts([...replacementTexts, trimmedText]);
-    setCustomReplacement("");
-    Alert.alert("Saved", "Your custom statement has been added.");
+    saveCustomText({
+      typedText: customReplacement,
+      savedText: replacementTexts,
+      setSavedText: setReplacementTexts,
+      setTypedText: setCustomReplacement,
+      itemName: "mantra",
+    });
   };
 
   const styles = StyleSheet.create({
