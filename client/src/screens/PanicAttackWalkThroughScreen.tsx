@@ -12,6 +12,7 @@ import {
 import { colors, textStyles } from "../utils/theme";
 import { PanicAttackWalkthroughScreenNavigationProp } from "../types/navigation";
 import { useResponsive } from "../utils/useResponsive";
+import { createBlankRound } from "../utils/createBlankRound";
 import { PanicAttackRound } from "../types/panicAttackRound";
 import {
   retrieveSession,
@@ -41,19 +42,9 @@ const PanicAttackWalkThroughScreen = ({
 }: PanicAttackWalkthroughScreenProps) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [rounds, setRounds] = useState<PanicAttackRound[]>([]);
-  const [currentRound, setCurrentRound] = useState<PanicAttackRound>({
-    roundNumber: 1,
-    selectedEmotion: "",
-    initialRating: 5,
-    ownershipPhrases: [],
-    customOwnershipTexts: [],
-    thoughtPatterns: [],
-    thoughtTexts: [],
-    selectedMantras: [],
-    replacementTexts: [],
-    finalRating: 5,
-    timestamp: new Date(),
-  });
+  const [currentRound, setCurrentRound] = useState<PanicAttackRound>(
+    createBlankRound(1),
+  );
   const [customOwnership, setCustomOwnership] = useState("");
   const [customThought, setCustomThought] = useState("");
   const [customReplacement, setCustomReplacement] = useState("");
@@ -72,19 +63,7 @@ const PanicAttackWalkThroughScreen = ({
 
   const handleStartOver = () => {
     setRounds([...rounds, currentRound]);
-    setCurrentRound({
-      roundNumber: rounds.length + 2,
-      selectedEmotion: "",
-      initialRating: 5,
-      ownershipPhrases: [],
-      customOwnershipTexts: [],
-      thoughtPatterns: [],
-      thoughtTexts: [],
-      selectedMantras: [],
-      replacementTexts: [],
-      finalRating: 5,
-      timestamp: new Date(),
-    });
+    setCurrentRound(createBlankRound(rounds.length + 2));
     setCustomOwnership("");
     setCustomThought("");
     setCustomReplacement("");
@@ -110,26 +89,12 @@ const PanicAttackWalkThroughScreen = ({
     // Clear the locally auto-saved session since it's now safely in Firestore
     deleteSession();
 
-    // Reset local state so reopening this screen starts a fresh session,
-    // not wherever the last one left off
     setCustomOwnership("");
     setCustomThought("");
     setCustomReplacement("");
     setCurrentStep(1);
     setRounds([]);
-    setCurrentRound({
-      roundNumber: 1,
-      selectedEmotion: "",
-      initialRating: 5,
-      ownershipPhrases: [],
-      customOwnershipTexts: [],
-      thoughtPatterns: [],
-      thoughtTexts: [],
-      selectedMantras: [],
-      replacementTexts: [],
-      finalRating: 5,
-      timestamp: new Date(),
-    });
+    setCurrentRound(createBlankRound(1));
 
     navigation.goBack();
   };
@@ -406,19 +371,7 @@ const PanicAttackWalkThroughScreen = ({
           deleteSession();
           setCurrentStep(1);
           setRounds([]);
-          setCurrentRound({
-            roundNumber: 1,
-            selectedEmotion: "",
-            initialRating: 5,
-            ownershipPhrases: [],
-            customOwnershipTexts: [],
-            thoughtPatterns: [],
-            thoughtTexts: [],
-            selectedMantras: [],
-            replacementTexts: [],
-            finalRating: 5,
-            timestamp: new Date(),
-          });
+          setCurrentRound(createBlankRound(1));
           setCustomOwnership("");
           setCustomThought("");
           setCustomReplacement("");
